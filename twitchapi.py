@@ -1,0 +1,38 @@
+from requests import get
+
+
+def get_channel_users(channel: str) -> list:
+    """Returns a list of users in the channel."""
+    url = f"https://tmi.twitch.tv/group/user/{channel}/chatters"
+
+    users = get(url).json()
+    try:
+        mods = users["chatters"]["moderators"]
+        viewers = users["chatters"]["viewers"]
+        vips = users["chatters"]["vips"]
+    except KeyError:
+        return [""]
+
+    return mods + viewers + vips
+
+
+def is_broadcasting(
+        channel: str,
+        client_id: str
+) -> bool:
+    """Returns a bool if the channel is broadcasting.
+
+    :param channel: Name of the channel.
+    :param client_id: Your account's
+    client-id. Look at "Getting a Client ID" here:
+    https://dev.twitch.tv/docs/v5
+    :return: A bool if the channel is
+    broadcasting.
+    """
+    url = f"https://api.twitch.tv/helix/streams/?user_login={channel}"
+    headers = {"Client-ID": client_id}
+
+    result = get(url, headers=headers).json()
+    if len(result["data"]) == 0:
+        return False
+    return True
