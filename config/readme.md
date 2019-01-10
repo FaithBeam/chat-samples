@@ -5,14 +5,14 @@
  **Default**
  
  * `starting_currency` Newly created accounts start with this amount of 
- currency
+ currency. Default `0`
  * `currency_name` The name of the currency the bot refers to and some of the
-  useable commands
+  useable commands. Default `Score`
   
   **Bot**
   
   * `cooldown` How frequently the bot can handle commands. The commands do 
-  not get queued, they will be ignored
+  not get queued, they will be ignored. Default `1`
   
   **Mongodb**
   
