@@ -2,6 +2,9 @@ import re
 
 
 class AddSong:
+    """
+    Add a song to the songqueue. The link must be a youtube link.
+    """
     def __init__(self, user, yt_link: str, music_queue):
         self.user = user
         self.yt_link = yt_link

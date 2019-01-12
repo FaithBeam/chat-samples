@@ -5,6 +5,10 @@ from commands import Commands
 
 
 class CustCommands(ChatCommand):
+    """
+    !commands
+    Returns a list of all commands.
+    """
     def __init__(self, whisper_cmds, public_cmds, privileged_cmds, c, channel):
         super().__init__(c, channel)
         self.whisper_cmds = whisper_cmds.copy()

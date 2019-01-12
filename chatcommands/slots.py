@@ -5,12 +5,18 @@ from random import choice
 from chatcommands.chatcommand import ChatCommand
 from config import config
 from template import Template
+from twitchapi import is_vip
 
 
 logging.getLogger(__name__)
 
 
 class Slots(ChatCommand):
+    """
+    !slots
+
+    The slots game. Costs 5 currency to play, but can be played even if you don't have enough. In this case you go into negative currency.
+    """
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user
@@ -18,9 +24,10 @@ class Slots(ChatCommand):
         self.my_emotes = Template("emotes", ("Emote Name", "Payout Value"))
         self.score = int(self.my_users.get_value(self.user))
         self.score_after = self.score
-        self.slot_price = config["SLOTS"]["SLOT_PRICE"]
+        self.slot_price = int(config["SLOTS"]["SLOT_PRICE"])
         self.payout = 0
         self.jackpot = False
+        self.is_vip = False
         self.reels = []
         self.currency_name = config["DEFAULT"]["CURRENCY_NAME"]
 
@@ -41,6 +48,12 @@ class Slots(ChatCommand):
             self.score_after -= self.slot_price
 
         multiplier = int(config["SLOTS"]["MULTIPLIER"])
+        """If multiplier is 1 and user is VIP double their payout."""
+        if multiplier == 1:
+            self.is_vip = is_vip(self.channel[1:], self.user)
+            if self.is_vip:
+                self.payout *= (2 * multiplier)
+
         self.payout *= multiplier
         self.score_after += self.payout
 

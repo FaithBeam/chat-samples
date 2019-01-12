@@ -5,6 +5,9 @@ from commands import Commands
 
 
 class GetCustomCommands(ChatCommand):
+    """
+    Returns a list of custom commands from the custom commands db.
+    """
     def __init__(self, command, c, channel):
         super().__init__(c, channel)
         self.command = command

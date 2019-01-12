@@ -5,6 +5,11 @@ from template import Template
 
 
 class Shop(ChatCommand):
+    """
+    !shop
+
+    Returns a list of items in the shop with their price.
+    """
     def __init__(self, c, channel):
         super().__init__(c, channel)
         self.do_work()

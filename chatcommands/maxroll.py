@@ -5,6 +5,12 @@ from config import config, config_file
 
 
 class MaxRoll(ChatCommand):
+    """
+    !maxroll
+    !maxroll <integer>
+
+    If no integer is supplied, return the current highest allowed roll. If an integer is supplied, change the max roll to that integer.
+    """
     def __init__(self, max_roll: str, c, channel):
         super().__init__(c, channel)
         self.max_roll = max_roll

@@ -7,6 +7,12 @@ from template import Template
 
 
 class Buy(ChatCommand):
+    """
+    !buy <shop_item>
+    Purchase an item from the shop.
+
+    The user must have enough currency to purchase an item.
+    """
     def __init__(self, user: str, item: str, music_queue: queue, e, c, channel):
         super().__init__(c, channel)
         self.user = user
@@ -34,10 +40,10 @@ class Buy(ChatCommand):
             self.send_message(msg)
             return
 
-        yt_link = parse_custom_cmd(self.e)
-        if yt_link:
-            yt_link = yt_link[1]
-            if self.item == "songrequest" and yt_link:
+        if self.item == "songrequest":
+            yt_link = parse_custom_cmd(self.e)
+            if yt_link:
+                yt_link = yt_link[1]
                 if AddSong(self.user, yt_link, self.music_queue).do_work():
                     msg = f"Added {yt_link} to the queue in position " \
                           f"{len(self.music_queue.queue)}."
@@ -48,11 +54,11 @@ class Buy(ChatCommand):
                     logging.info(msg)
                     self.send_message(msg)
                     return
-        else:
-            msg = "Need a link."
-            logging.info(msg)
-            self.send_message(msg)
-            return
+            else:
+                msg = "Need a link."
+                logging.info(msg)
+                self.send_message(msg)
+                return
 
         my_users.add_to_value(self.user, str(-1 * my_shop.get_value(self.item)))
 

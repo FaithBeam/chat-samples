@@ -10,6 +10,10 @@ logging.getLogger(__name__)
 
 
 class Guess(ChatCommand):
+    """
+    !guess <1-100>
+    Play the guessing game. The guessing game is free to play. The default is to allow 1-100 but the max guess can be changed in config/config.ini.
+    """
     def __init__(self, user: str, guess: str, auth_user, c, channel: str):
         super().__init__(c, channel)
         self.user = user
@@ -48,7 +52,7 @@ class Guess(ChatCommand):
         if int(self.guess) == rand_num:
             my_users.add_to_value(self.user, payout)
             msg = (
-                f"WINNER! {self.user} guessed the number {rand_num}! Added" 
+                f"WINNER! {self.user} guessed the number {rand_num}! Added " 
                 f"{payout} {currency_name}. {self.user} has "
                 f"{str(my_users.get_value(self.user))}."
             )
@@ -57,6 +61,13 @@ class Guess(ChatCommand):
             self.send_message(msg)
         elif (rand_num - 2) <= int(self.guess) <= (rand_num + 2):
             consolation_prize = config["GUESS"]["CONSOLATION_PRIZE"]
+            my_users.add_to_value(self.user, consolation_prize)
+            msg = f"Consolation prize! You chose {self.guess}, number was " \
+                  f"{rand_num}. Added {consolation_prize} {currency_name}."
+            logging.info(msg)
+            self.send_whisper(msg, self.user)
+        elif (rand_num - 5) <= int(self.guess) <= (rand_num + 5):
+            consolation_prize = "1"
             my_users.add_to_value(self.user, consolation_prize)
             msg = f"Consolation prize! You chose {self.guess}, number was " \
                   f"{rand_num}. Added {consolation_prize} {currency_name}."

@@ -5,6 +5,10 @@ from commands import Commands
 
 
 class EditCom(ChatCommand):
+    """
+    !editcom <command_name> <new strings to return>
+    Edits an existing custom command.
+    """
     def __init__(self, command, val, c, channel):
         super().__init__(c, channel)
         self.command = command

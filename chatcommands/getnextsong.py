@@ -5,6 +5,9 @@ from chatcommands.chatcommand import ChatCommand
 
 
 class GetNextSong(ChatCommand):
+    """
+    Returns the next song in the songqueue.
+    """
     def __init__(self, music_queue: queue, c, channel):
         super().__init__(c, channel)
         self.music_queue = music_queue

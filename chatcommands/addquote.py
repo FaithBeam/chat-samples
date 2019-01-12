@@ -5,6 +5,10 @@ from quotes import Quotes
 
 
 class AddQuote(ChatCommand):
+    """
+    !addquote <your quote here>
+    Add a quote to the quote db.
+    """
     def __init__(self, quote, c, channel):
         super().__init__(c, channel)
         self.quote = quote

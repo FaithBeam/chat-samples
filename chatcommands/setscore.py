@@ -5,6 +5,11 @@ from template import Template
 
 
 class SetScore(ChatCommand):
+    """
+    !setscore <user> <integer>
+
+    Sets the user's currency to the amount.
+    """
     def __init__(self, user: str, score: str, c, channel):
         super().__init__(c, channel)
         self.user = user

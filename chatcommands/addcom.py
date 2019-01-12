@@ -5,6 +5,10 @@ from commands import Commands
 
 
 class AddCom(ChatCommand):
+    """
+    !addcom <command_name> <strings to return>
+    Add a command to the custom commands db.
+    """
     def __init__(self, key: str, val: str, c, channel):
         super().__init__(c, channel)
         self.key = key

@@ -5,6 +5,11 @@ from template import Template
 
 
 class Winners(ChatCommand):
+    """
+    !winners
+
+    Returns the three users with the most currency.
+    """
     def __init__(self, c, channel):
         super().__init__(c, channel)
         self.do_work()

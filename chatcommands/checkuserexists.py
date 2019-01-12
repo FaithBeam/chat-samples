@@ -5,6 +5,10 @@ from template import Template
 
 
 class CheckUserExists:
+    """
+    Checks if a user exists within the scores db. If they don't exist,
+    create an account for them.
+    """
     def __init__(
             self,
             user: str

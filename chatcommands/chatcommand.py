@@ -2,6 +2,9 @@ import logging
 
 
 class ChatCommand:
+    """
+    Parent class that should be inherited from to create a new command.
+    """
     def __init__(self, c, channel):
         self.c = c
         self.channel = channel

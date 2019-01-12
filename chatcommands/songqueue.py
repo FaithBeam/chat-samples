@@ -4,6 +4,11 @@ from chatcommands.chatcommand import ChatCommand
 
 
 class SongQueue(ChatCommand):
+    """
+    !songqueue
+
+    Lists the songs in the songqueue with who requested it and their position.
+    """
     def __init__(self, music_queue, c, channel):
         super().__init__(c, channel)
         self.music_queue = music_queue

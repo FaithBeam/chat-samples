@@ -5,6 +5,10 @@ from template import Template
 
 
 class DelItem(ChatCommand):
+    """
+    !delitem <shop_item_name>
+    Deletes an item from the shop.
+    """
     def __init__(self, item, c, channel):
         super().__init__(c, channel)
         self.item = item

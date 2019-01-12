@@ -5,6 +5,10 @@ from config import config, config_file
 
 
 class DiceGame(ChatCommand):
+    """
+    !dicegame
+    Flips the !roll command on or off. If the game is turned on, turn it off, and if the game is off, turn it on.
+    """
     def __init__(self, c, channel):
         super().__init__(c, channel)
         self.do_work()
