@@ -1,5 +1,7 @@
 .idea/
 .git/
+.vscode/
+config/
 venv/
 __pycache__/
 build/

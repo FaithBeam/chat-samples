@@ -94,9 +94,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                                 "trickle", "maxroll", "dicegame", "nextsong",
                                 "songqueue"]
         self.public_cmds = ["addquote", "commands", f"{self.currency_name}",
-                            f"{self.currency_name}shop",
-                            "winners", "losers", "numquotes", "quote", "buy",
-                            "roll"]
+                            "shop", "winners", "losers", "numquotes",
+                            "quote", "buy", "roll"]
         self.music_queue = queue.Queue()
 
     def on_pubmsg(self, c, e):
@@ -177,7 +176,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             msg = self._parse_custom_cmd(e)
             if msg:
                 AddItem(msg[0], int(msg[1]), self.c, self.channel)
-        elif cmd == f"set{config['DEFAULT']['CURRENCY_NAME']}":
+        elif cmd == f"set{self.currency_name}":
             msg = self._parse_custom_cmd(e)
             SetScore(msg[0].lower(), msg[1], self.c, self.channel)
         elif cmd == "songqueue":
@@ -200,7 +199,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             if self._message_word_count(e.arguments[0]) == 2:
                 user = self._get_second_word(e).lower()
             Scores(user, self.c, self.channel)
-        elif cmd == f"{self.currency_name}shop":
+        elif cmd == "shop":
             Shop(self.c, self.channel)
         elif cmd == "winners":
             Winners(self.c, self.channel)

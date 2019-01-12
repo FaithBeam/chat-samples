@@ -29,7 +29,15 @@ Installation
     source venv/bin/activate
     pip install irc requests pymongo
 
-**Configuring the bot**
+Configuring
+===========
 
 Refer to `config/readme.md` for configuration. Credentials.ini is the only 
 necessary edits unless you installed your mongodb instance on another machine.
+
+Running
+=======
+
+::
+
+    python twitchbot.py

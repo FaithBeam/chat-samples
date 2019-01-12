@@ -16,6 +16,15 @@ def get_channel_users(channel: str) -> list:
     return mods + viewers + vips
 
 
+def get_user_group(channel: str, user: str) -> str:
+    url = f"https://tmi.twitch.tv/group/user/{channel}/chatters"
+    users = get(url).json()
+    for group, user_list in users["chatters"].items():
+        if user in user_list:
+            return group
+    return ""
+
+
 def is_broadcasting(
         channel: str,
         client_id: str
@@ -36,3 +45,11 @@ def is_broadcasting(
     if len(result["data"]) == 0:
         return False
     return True
+
+
+def is_vip(channel: str, user: str) -> bool:
+    group = get_user_group(channel, user)
+    if group == "vips":
+        return True
+    else:
+        return False
