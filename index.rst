@@ -1,31 +1,33 @@
-# Python Twitchbot
+Python Twitchbot
+================
 
-A [Twitch.tv](www.twitch.tv) chat bot written in Python3 that uses
-[MongoDB](https://www.mongodb.com/) to store data.
+A `Twitch.tv <www.twitch.tv>`_ chat bot written in Python3 that uses
+`MongoDB <https://www.mongodb.com/>`_ to store data.
 
-## Requirements
+Requirements
+============
 
-* [Python](https://www.python.org/downloads/) >= 3.6
-* A [MongoDB](https://www.mongodb.com/) instance
-* [Requests](https://pypi.org/project/requests/)
-* [IRC](https://pypi.org/project/irc/)
-* [PyMongo](https://pypi.org/project/pymongo/)
+* `Python <https://www.python.org/downloads/>`_ >= 3.6
+* A `MongoDB <https://www.mongodb.com/>`_ instance
+* `Requests <https://pypi.org/project/requests/>`_
+* `IRC <https://pypi.org/project/irc/>`_
+* `PyMongo <https://pypi.org/project/pymongo/>`_
 
-## Installation
+Installation
+============
 
 **Installing MongoDB**
 
-[Installation](https://docs.mongodb.com/manual/installation/)
+`Installation <https://docs.mongodb.com/manual/installation/>`_
 
 **Installing the bot**
+::
 
-```
-git clone https://github.com/FaithBeam/chat-samples.git
-cd chat-samples
-virtualenv venv
-source venv/bin/activate
-pip install irc requests pymongo
-```
+    git clone https://github.com/FaithBeam/chat-samples.git
+    cd chat-samples
+    virtualenv venv
+    source venv/bin/activate
+    pip install irc requests pymongo
 
 **Configuring the bot**
 
