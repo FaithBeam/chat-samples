@@ -3,6 +3,7 @@ import queue
 
 from chatcommands.addsong import AddSong
 from chatcommands.chatcommand import ChatCommand
+from config import credentials
 from template import Template
 
 
@@ -63,8 +64,8 @@ class Buy(ChatCommand):
         my_users.add_to_value(self.user, str(-1 * my_shop.get_value(self.item)))
 
         msg = (
-            f"{self.user} purchased {self.item}. {self.user} has "
-            f"{str(my_users.get_value(self.user))}."
+            f"@{credentials['CREDENTIALS']['CHANNEL']} {self.user} purchased "
+            f"{self.item}. {self.user} has {str(my_users.get_value(self.user))}."
         )
         logging.info(msg)
         self.send_message(msg)
