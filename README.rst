@@ -1,6 +1,8 @@
 Readme
 ======
 
+`Docs <https://chat-samples.readthedocs.io/en/master/index.html>`_
+
 A `Twitch.tv <www.twitch.tv>`_ chat bot written in Python3 that uses
 `MongoDB <https://www.mongodb.com/>`_ to store data.
 
