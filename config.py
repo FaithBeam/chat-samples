@@ -7,6 +7,6 @@ config_file = "./config/config.ini"
 config = configparser.ConfigParser()
 config.read(config_file)
 
-credentials_file = "./config/config.ini"
+credentials_file = "./config/credentials.ini"
 credentials = configparser.ConfigParser()
 credentials.read(credentials_file)
