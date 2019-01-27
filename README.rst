@@ -1,5 +1,5 @@
-Python Twitchbot
-================
+Readme
+======
 
 A `Twitch.tv <www.twitch.tv>`_ chat bot written in Python3 that uses
 `MongoDB <https://www.mongodb.com/>`_ to store data.
