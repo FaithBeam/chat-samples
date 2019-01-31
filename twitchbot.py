@@ -27,6 +27,7 @@ from chatcommands.multiplier import Multiplier
 from chatcommands.numquotes import NumQuotes
 from chatcommands.quote import Quote
 from chatcommands.rollthedice import RollTheDice
+from chatcommands.say import Say
 from chatcommands.scores import Scores
 from chatcommands.scoretrickle import ScoreTrickle
 from chatcommands.setscore import SetScore
@@ -87,6 +88,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         )
 
         self.whisper_cmds = ["slots", "guess"]
+        self.privileged_whisper_cmds = ["say"]
         self.privileged_cmds = ["addcom", f"add{self.currency_name}",
                                 "delcom", "delitem",
                                 "delquote", "editcom", "editquote", f"give{self.currency_name}",
@@ -117,6 +119,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         if cmd in self.whisper_cmds and self._is_whisper(e.target):
             self._do_whisper_cmd(e, cmd, user)
+        elif cmd in self.privileged_whisper_cmds and self._is_whisper(e.target) and rank < 5:
+            self._do_privileged_whisper_cmd(e, cmd, user)
         elif cmd in self.privileged_cmds and rank < 5:
             self._do_privileged_cmd(e, cmd)
         elif cmd in self.public_cmds:
@@ -184,6 +188,11 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         elif cmd == "trickle":
             msg = self._get_second_word(e)
             Trickle(msg, self.c, self.channel)
+
+    def _do_privileged_whisper_cmd(self, e, cmd, user):
+        if cmd == "say":
+            msg = get_quote(e)
+            Say(msg, self.c, self.channel)
 
     def _do_public_cmd(self, e, cmd, user):
         if not self.auth_user.user_can_message('bot', self.bot_cooldown):
