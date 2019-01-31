@@ -327,10 +327,7 @@ def main(
 
 
 if __name__ == '__main__':
-    import configparser
-
-    credentials = configparser.ConfigParser()
-    credentials.read("./config/credentials.ini")
+    from config import credentials
 
     main(
         credentials["CREDENTIALS"]["BOT_NAME"],
