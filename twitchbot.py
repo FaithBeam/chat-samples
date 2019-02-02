@@ -200,7 +200,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             return
         elif cmd == "addquote":
             quote = get_quote(e)
-            AddQuote(quote, self.c, self.channel)
+            if quote:
+                AddQuote(quote, self.c, self.channel)
         elif cmd == "commands":
             CustCommands(self.whisper_cmds, self.public_cmds,
                          self.privileged_cmds,
