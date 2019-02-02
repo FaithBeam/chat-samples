@@ -192,7 +192,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     def _do_privileged_whisper_cmd(self, e, cmd, user):
         if cmd == "say":
             msg = get_quote(e)
-            Say(msg, self.c, self.channel)
+            if msg:
+                Say(msg, self.c, self.channel)
 
     def _do_public_cmd(self, e, cmd, user):
         if not self.auth_user.user_can_message('bot', self.bot_cooldown):
