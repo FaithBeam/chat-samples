@@ -12,7 +12,10 @@ logging.getLogger(__name__)
 class Guess(ChatCommand):
     """
     !guess <1-100>
-    Play the guessing game. The guessing game is free to play. The default is to allow 1-100 but the max guess can be changed in config/config.ini.
+
+    Play the guessing game. The guessing game is free to play.
+    The default is to allow 1-100 but the max guess can be changed in
+    config/config.ini.
     """
     def __init__(self, user: str, guess: str, auth_user, c, channel: str):
         super().__init__(c, channel)
@@ -28,9 +31,16 @@ class Guess(ChatCommand):
         bot_win_cooldown = int(config["GUESS"]["bot_win_cooldown"])
         user_guess_cooldown = int(config["GUESS"]["user_guess_cooldown"])
 
-        if not self.auth_user.user_can_message("bot_guess", bot_win_cooldown, False):
+        if not self.auth_user.user_can_message(
+                "bot_guess",
+                bot_win_cooldown,
+                False
+        ):
             return
-        if not self.auth_user.user_can_message(self.user + "_guess", user_guess_cooldown):
+        if not self.auth_user.user_can_message(
+                self.user + "_guess",
+                user_guess_cooldown
+        ):
             return
 
         my_users = Template("scores", ("Username", "Score"))
@@ -52,7 +62,7 @@ class Guess(ChatCommand):
         if int(self.guess) == rand_num:
             my_users.add_to_value(self.user, payout)
             msg = (
-                f"WINNER! {self.user} guessed the number {rand_num}! Added " 
+                f"WINNER! {self.user} guessed the number {rand_num}! Added "
                 f"{payout} {currency_name}. {self.user} has "
                 f"{str(my_users.get_value(self.user))}."
             )

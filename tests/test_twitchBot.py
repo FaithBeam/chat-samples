@@ -125,8 +125,12 @@ class TestTwitchBot(TestCase):
     def test__parse_custom_cmd(self):
         cmd = "testcom"
         text = "is a new command!"
-        my_event = Event(arguments=[f"addcom {cmd} {text}"], source="", target="",
-                         type="")
+        my_event = Event(
+            arguments=[f"addcom {cmd} {text}"],
+            source="",
+            target="",
+            type=""
+        )
         assert self.my_twitchbot._parse_custom_cmd(my_event) == [cmd, text]
 
         cmd = "test-com"
@@ -141,8 +145,12 @@ class TestTwitchBot(TestCase):
         self.client_id = "test-client-id"
         self.oauth = "test-oauth"
         self.channel = "test-channel"
-        self.my_twitchbot = TwitchBot(self.username, self.client_id, self.oauth,
-                             self.channel)
+        self.my_twitchbot = TwitchBot(
+            self.username,
+            self.client_id,
+            self.oauth,
+            self.channel
+        )
 
     def tearDown(self):
         del self.username

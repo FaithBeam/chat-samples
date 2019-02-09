@@ -20,5 +20,8 @@ class CheckUserExists:
         my_users = Template("scores", ("Username", "Score"))
 
         if not my_users.item_exists(self.user):
-            my_users.add_item(self.user, int(config["DEFAULT"]["STARTING_CURRENCY"]))
+            my_users.add_item(
+                self.user,
+                int(config["DEFAULT"]["STARTING_CURRENCY"])
+            )
             logging.info(f"{self.user} doesn't exist. Creating user.")

@@ -43,11 +43,13 @@ from timeouts import Timeouts
 
 
 logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                    datefmt='%m-%d %H:%M',
-                    filename=f"logs/{time.strftime('%Y%m%d-%H%M%S')}.log",
-                    filemode='w')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+    datefmt='%m-%d %H:%M',
+    filename=f"logs/{time.strftime('%Y%m%d-%H%M%S')}.log",
+    filemode='w'
+)
 
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
@@ -89,15 +91,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         self.whisper_cmds = ["slots", "guess"]
         self.privileged_whisper_cmds = ["say"]
-        self.privileged_cmds = ["addcom", f"add{self.currency_name}",
-                                "delcom", "delitem",
-                                "delquote", "editcom", "editquote", f"give{self.currency_name}",
-                                "multiplier", "additem", f"set{self.currency_name}",
-                                "trickle", "maxroll", "dicegame", "nextsong",
-                                "songqueue"]
-        self.public_cmds = ["addquote", "commands", f"{self.currency_name}",
-                            "shop", "winners", "losers", "numquotes",
-                            "quote", "buy", "roll"]
+        self.privileged_cmds = [
+            "addcom", f"add{self.currency_name}", "delcom", "delitem",
+            "delquote", "editcom", "editquote", f"give{self.currency_name}",
+            "multiplier", "additem", f"set{self.currency_name}",
+            "trickle", "maxroll", "dicegame", "nextsong", "songqueue"
+        ]
+        self.public_cmds = [
+            "addquote", "commands", f"{self.currency_name}", "shop",
+            "winners", "losers", "numquotes", "quote", "buy", "roll"
+        ]
         self.music_queue = queue.Queue()
 
     def on_pubmsg(self, c, e):
@@ -113,13 +116,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         CheckUserExists(user)
 
         user_cmd_cooldown = int(config["COMMANDS"]["user_cmd_cooldown"])
-        if not self.auth_user.user_can_message(f"{user}_cmd",
-                                               user_cmd_cooldown):
+        if not self.auth_user.user_can_message(
+                f"{user}_cmd", user_cmd_cooldown
+        ):
             return
 
         if cmd in self.whisper_cmds and self._is_whisper(e.target):
             self._do_whisper_cmd(e, cmd, user)
-        elif cmd in self.privileged_whisper_cmds and self._is_whisper(e.target) and rank < 5:
+        elif cmd in self.privileged_whisper_cmds \
+                and self._is_whisper(e.target) \
+                and rank < 5:
             self._do_privileged_whisper_cmd(e, cmd, user)
         elif cmd in self.privileged_cmds and rank < 5:
             self._do_privileged_cmd(e, cmd)

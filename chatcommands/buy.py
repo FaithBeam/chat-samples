@@ -14,7 +14,15 @@ class Buy(ChatCommand):
 
     The user must have enough currency to purchase an item.
     """
-    def __init__(self, user: str, item: str, music_queue: queue, e, c, channel):
+    def __init__(
+            self,
+            user: str,
+            item: str,
+            music_queue: queue,
+            e,
+            c,
+            channel
+    ):
         super().__init__(c, channel)
         self.user = user
         self.item = item
@@ -61,11 +69,15 @@ class Buy(ChatCommand):
                 self.send_message(msg)
                 return
 
-        my_users.add_to_value(self.user, str(-1 * my_shop.get_value(self.item)))
+        my_users.add_to_value(
+            self.user,
+            str(-1 * my_shop.get_value(self.item))
+        )
 
         msg = (
             f"@{credentials['CREDENTIALS']['CHANNEL']} {self.user} purchased "
-            f"{self.item}. {self.user} has {str(my_users.get_value(self.user))}."
+            f"{self.item}. {self.user} has "
+            f"{str(my_users.get_value(self.user))}."
         )
         logging.info(msg)
         self.send_message(msg)

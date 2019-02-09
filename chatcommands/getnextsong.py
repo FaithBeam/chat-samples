@@ -16,8 +16,8 @@ class GetNextSong(ChatCommand):
     def do_work(self):
         if len(self.music_queue.queue) > 0:
             yt_link = self.music_queue.get()
-            msg = f"{yt_link}\t There are {len(self.music_queue.queue)} songs left in " \
-                f"the queue."
+            msg = f"{yt_link}\t There are {len(self.music_queue.queue)} " \
+                  f"songs left in the queue."
             logging.info(msg)
             self.send_message(msg)
         else:

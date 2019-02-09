@@ -64,4 +64,6 @@ class MongoCon:
             search: dict,
             set_data: dict
     ):
-        return self.db[self.collection_name].replace_one(search, set_data).modified_count
+        return self.db[self.collection_name]\
+            .replace_one(search, set_data)\
+            .modified_count

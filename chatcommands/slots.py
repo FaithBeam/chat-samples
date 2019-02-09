@@ -15,7 +15,8 @@ class Slots(ChatCommand):
     """
     !slots
 
-    The slots game. Costs 5 currency to play, but can be played even if you don't have enough. In this case you go into negative currency.
+    The slots game. Costs 5 currency to play, but can be played even if you
+    don't have enough. In this case you go into negative currency.
     """
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)

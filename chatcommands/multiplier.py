@@ -9,7 +9,8 @@ class Multiplier(ChatCommand):
     !multiplier
     !multiplier <integer>
 
-    If no integer is supplied, return the multiplier. If an integer is supplied, set the multiplier to the integer.
+    If no integer is supplied, return the multiplier. If an integer is
+    supplied, set the multiplier to the integer.
     """
     def __init__(self, multipy_amt, c, channel):
         super().__init__(c, channel)

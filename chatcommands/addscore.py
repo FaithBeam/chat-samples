@@ -16,7 +16,8 @@ class AddScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template("scores", ("Username", "Score")).add_to_value(self.user,
-                                                                     self.score)
+        msg = Template("scores", ("Username", "Score")).add_to_value(
+            self.user, self.score
+        )
         logging.info(msg)
         self.send_message(msg)

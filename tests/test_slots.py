@@ -13,11 +13,13 @@ class TestSlots(TestCase):
         self.fail()
 
     def test_spin_reels(self, mocked_get_all_data):
-        mocked_get_all_data.return_value = {"Kappa": 1, "OpieOP": 2, "DansGame": 3}
+        mocked_get_all_data.return_value = {
+            "Kappa": 1,
+            "OpieOP": 2,
+            "DansGame": 3
+        }
         tmp = self.my_slots.spin_reels()
         print(tmp)
-
-    @patch('template.Template.get_all_data')
 
     def setUp(self):
         self.user = "test-user"

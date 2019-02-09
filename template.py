@@ -32,8 +32,10 @@ class Template(MongoCon):
             return f"{key} doesn't exist."
         pre_val = self.get_value(key)
         search = {self.fieldnames[0]: key}
-        data = {self.fieldnames[0]: key, self.fieldnames[1]: int(pre_val) + int(
-            val)}
+        data = {
+            self.fieldnames[0]: key,
+            self.fieldnames[1]: int(pre_val) + int(val)
+        }
         if self.update_document(search, data) == 1:
             return (
                 f"Added {val} to {key}. {key} now has "

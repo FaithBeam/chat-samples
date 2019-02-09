@@ -9,7 +9,8 @@ class Trickle(ChatCommand):
     !trickle
     !trickle <integer>
 
-    If no integer is supplied, return the current trickle amount. If an integer is supplied, set the trickle amount to the integer.
+    If no integer is supplied, return the current trickle amount. If an
+    integer is supplied, set the trickle amount to the integer.
     """
     def __init__(self, trickle_amt, c, channel):
         super().__init__(c, channel)

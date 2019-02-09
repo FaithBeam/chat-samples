@@ -1,8 +1,8 @@
 """
 Provides a way to limit how often a user's command is acknowledged by the
 bot. The username is used as a key in the dictionary and the value is the
-time when that user is allowed to do another command. The set time is created by
-getting the current time and adding the delay to it.
+time when that user is allowed to do another command. The set time is created
+by getting the current time and adding the delay to it.
 """
 import datetime
 
