@@ -18,9 +18,10 @@ class MongoCon:
             self,
             field: str
     ):
-        return self.db[self.collection_name].find().sort(
-            field, ASCENDING
-        ).limit(3)
+        return self.db[self.collection_name]\
+            .find()\
+            .sort(field, ASCENDING)\
+            .limit(3)
 
     def count_documents(self):
         return self.db[self.collection_name].count()
@@ -55,9 +56,10 @@ class MongoCon:
             field: str,
             limit=3
     ):
-        return self.db[self.collection_name].find().sort(
-            field, DESCENDING
-        ).limit(limit)
+        return self.db[self.collection_name]\
+            .find()\
+            .sort(field, DESCENDING)\
+            .limit(limit)
 
     def update_document(
             self,
