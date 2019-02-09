@@ -18,7 +18,7 @@ class Quotes(Template):
             return "Didn't add quote."
         self.data.append(quote)
         self.insert_document({self.fieldnames[0]: quote})
-        return "Added quote."
+        return f"Added quote at position #{len(self.data)}."
 
     def contains_quote(
             self,
@@ -69,7 +69,7 @@ class Quotes(Template):
         if number == -1:
             return self.get_random_quote()
         if number > -1 and self.exists_quote(number):
-            return self.data[number]
+            return f"#{number + 1}: {self.data[number]}"
         return "No."
 
     def get_number_quotes(self) -> str:
@@ -77,5 +77,7 @@ class Quotes(Template):
 
     def get_random_quote(self) -> str:
         if len(self.data) > 0:
-            return choice(self.data)
+            quote = choice(self.data)
+            pos = self.data.index(quote) + 1
+            return f"#{pos}: {quote}"
         return "No quotes."
