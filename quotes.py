@@ -69,7 +69,7 @@ class Quotes(Template):
         if number == -1:
             return self.get_random_quote()
         if number > -1 and self.exists_quote(number):
-            return f"#{number + 1}: {self.data[number]}"
+            return f"#{number + 1}/{len(self.data)}: {self.data[number]}"
         return "No."
 
     def get_number_quotes(self) -> str:
@@ -79,5 +79,5 @@ class Quotes(Template):
         if len(self.data) > 0:
             quote = choice(self.data)
             pos = self.data.index(quote) + 1
-            return f"#{pos}: {quote}"
+            return f"#{pos}/{len(self.data)}: {quote}"
         return "No quotes."
