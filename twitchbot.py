@@ -209,9 +209,13 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             if quote:
                 AddQuote(quote, self.c, self.channel)
         elif cmd == "commands":
-            CustCommands(self.whisper_cmds, self.public_cmds,
-                         self.privileged_cmds,
-                         self.c, self.channel)
+            CustCommands(
+                self.whisper_cmds,
+                self.public_cmds,
+                self.privileged_cmds,
+                self.c,
+                self.channel
+            )
         elif cmd == self.currency_name:
             if self._message_word_count(e.arguments[0]) == 2:
                 user = self._get_second_word(e).lower()
