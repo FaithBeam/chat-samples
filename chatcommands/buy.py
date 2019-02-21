@@ -3,7 +3,7 @@ import queue
 
 from chatcommands.addsong import AddSong
 from chatcommands.chatcommand import ChatCommand
-from config import credentials
+from config import config, credentials
 from template import Template
 
 
@@ -43,7 +43,8 @@ class Buy(ChatCommand):
         if not my_users.get_value(self.user) >= my_shop.get_value(self.item):
             msg = (
                 f"{self.item} costs {str(my_shop.get_value(self.item))}, "
-                f"you have {str(my_users.get_value(self.user))}."
+                f"you have {str(my_users.get_value(self.user))} "
+                f"{config['DEFAULT']['currency_name']}."
             )
             logging.info(msg)
             self.send_message(msg)
@@ -77,7 +78,8 @@ class Buy(ChatCommand):
         msg = (
             f"@{credentials['CREDENTIALS']['CHANNEL']} {self.user} purchased "
             f"{self.item}. {self.user} has "
-            f"{str(my_users.get_value(self.user))}."
+            f"{str(my_users.get_value(self.user))} "
+            f"{config['DEFAULT']['currency_name']}."
         )
         logging.info(msg)
         self.send_message(msg)
