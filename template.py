@@ -1,14 +1,12 @@
-from mongoconn import MongoCon
+from yamlhandler import YamlHandler
 
 
-class Template(MongoCon):
+class Template(YamlHandler):
     def __init__(
             self,
-            collection_name: str,
-            fieldnames: tuple
+            file: str
     ):
-        super().__init__(collection_name)
-        self.fieldnames = fieldnames
+        super().__init__(file)
 
     def add_item(
             self,
@@ -31,23 +29,16 @@ class Template(MongoCon):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
         pre_val = self.get_value(key)
-        search = {self.fieldnames[0]: key}
-        data = {
-            self.fieldnames[0]: key,
-            self.fieldnames[1]: int(pre_val) + int(val)
-        }
-        if self.update_document(search, data) == 1:
-            return (
-                f"Added {val} to {key}. {key} now has "
-                f"{str(int(pre_val) + int(val))}."
-            )
-        return f"Couldn't add {val} to {key}."
+        post_val = pre_val + int(val)
+        self.insert_document(key, post_val)
+        return f"Added {val} to {key}. {key} now has {str(post_val)}."
 
     def delete_item(self, item_name: str) -> str:
-        result = self.delete_document({self.fieldnames[0]: item_name})
-        if result == 1:
+        if self.item_exists(item_name):
+            self.delete_document(item_name)
             return f"Deleted {item_name}."
-        return f"Didn't delete {item_name}."
+        else:
+            return f"{item_name} doesn't exist."
 
     def get_all_data(self):
         data = self.get_all_documents()
@@ -66,17 +57,8 @@ class Template(MongoCon):
                 my_list.append(row[self.fieldnames[0]])
             return my_list
 
-    def get_bottom(
-            self,
-            field: str
-    ) -> str:
-        tmp = self.bottom(field)
-        result = ""
-        for row in tmp:
-            result = "".join(
-                 [result, ", ", row["Username"], ": ", str(row["Score"])]
-            )
-        return result[2:]
+    def get_bottom(self) -> str:
+        return ", ".join(self.bottom())
 
     def get_items(self) -> str:
         """Returns self.data as a string for human consumption."""
@@ -114,21 +96,20 @@ class Template(MongoCon):
             self,
             key: str
     ) -> str:
-        if not self.item_exists(key):
+        if self.item_exists(key):
+            return self.get_document(key)
+        else:
             return f"{key} doesn't exist."
-        data = {self.fieldnames[0]: key}
-        result = self.get_document(data)
-        return result[self.fieldnames[1]]
 
     def item_exists(
             self,
             key: str
     ):
-        data = {self.fieldnames[0]: key}
-        result = self.get_document(data)
-        if result is not None:
+        try:
+            self.get_document(key)
             return True
-        return False
+        except KeyError:
+            return False
 
     def set_value(
             self,
@@ -137,9 +118,10 @@ class Template(MongoCon):
     ):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
-        data = {self.fieldnames[0]: key, self.fieldnames[1]: val}
-        search = {self.fieldnames[0]: key}
-        result = self.update_document(search, data)
-        if result == 1:
-            return f"Set {key} to {val}."
-        return f"Couldn't set {key} to {val}."
+        self.insert_document(key, val)
+        return f"Set {key} to {val}."
+
+
+if __name__ == "__main__":
+    my_template = Template('test.yaml')
+    print(my_template.get_bottom())
