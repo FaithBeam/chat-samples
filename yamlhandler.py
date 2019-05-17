@@ -65,14 +65,11 @@ class YamlHandler:
         for i in range(limit):
             max_key, max_val = max(current.items(), key=lambda x:x[1])
             current.pop(max_key)
-            my_list += [max_key, max_val]
+            tmp = {max_key: max_val}
+            my_list.append(tmp)
+            tmp = None
         return my_list
 
     def _write_yaml(self):
         with open(self.file, 'w') as f:
             yaml.safe_dump(self.yaml_file, f, default_flow_style=False)
-
-
-if __name__ == "__main__":
-    my_yaml = YamlHandler("test.yaml")
-    print(my_yaml.bottom())

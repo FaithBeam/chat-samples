@@ -65,32 +65,18 @@ class Template(YamlHandler):
         tmp = self.get_all_data()
         return ', '.join("{!s}: {!s}".format(k, v) for (k, v) in tmp.items())
 
-    def get_items_descending(
-            self,
-            field: str,
-            limit=3
-    ) -> str:
-        tmp = self.top(field, limit)
-        result = ""
-        for row in tmp:
-            result = "".join(
-                 [result, ", ", row[self.fieldnames[0]], ": ",
-                  str(row[self.fieldnames[1]])]
-            )
-        return result[2:]
 
     def get_top(
             self,
-            field: str,
             limit=3
     ) -> str:
-        tmp = self.top(field, limit)
+        tmp = self.top(limit)
         result = ""
         for row in tmp:
-            result = "".join(
-                 [result, ", ", row["Username"], ": ", str(row["Score"])]
-            )
-        return result[2:]
+            key = next(iter(row.keys()))
+            val = str(row[key])
+            result = "".join([result, key, ": ", val, ", "])
+        return result[0:-2]
 
     def get_value(
             self,
@@ -120,8 +106,3 @@ class Template(YamlHandler):
             return f"{key} doesn't exist."
         self.insert_document(key, val)
         return f"Set {key} to {val}."
-
-
-if __name__ == "__main__":
-    my_template = Template('test.yaml')
-    print(my_template.get_bottom())
