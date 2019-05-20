@@ -17,11 +17,11 @@ class YamlHandler:
             self,
             limit=3
     ) -> List[str]:
-        current = self.yaml_file.copy()
+        data = self.yaml_file.copy()
         my_list = []
         for i in range(limit):
-            min_key, min_val = min(current.items(), key=lambda x:x[1])
-            current.pop(min_key)
+            min_key, min_val = min(data.items(), key=lambda x:x[1])
+            data.pop(min_key)
             my_list.append(f"{min_key}: {min_val}")
         return my_list
 
