@@ -42,12 +42,11 @@ class YamlHandler:
         return self.yaml_file[key]
 
     def get_all_documents(self) -> list:
-        my_list = []
-        for i in range(len(self.yaml_file)):
-            key = next(iter(self.yaml_file.keys()))
-            val = self.yaml_file[key]
-            my_list.append([key, val])
-        return my_list
+        tmp_list = []
+        tmp = self.db[self.collection_name].find()
+        for row in tmp:
+            tmp_list.append(row)
+        return tmp_list
 
     def insert_document(
             self,
