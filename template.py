@@ -15,8 +15,11 @@ class Template(YamlHandler):
     ):
         if self.item_exists(key):
             return f"{key} already exists."
-        self.insert_document(key, val)
-        return f"Added {key}: {val}."
+        data = {self.fieldnames[0]: key, self.fieldnames[1]: val}
+        result = self.insert_document(data)
+        if result is not None:
+            return f"Added {key}: {val}."
+        return f"Couldn't add {key}."
 
     def add_to_value(
             self,
@@ -38,10 +41,30 @@ class Template(YamlHandler):
             return f"{item_name} doesn't exist."
 
     def get_all_data(self):
-        return self.get_all_documents()
+        data = self.get_all_documents()
+        if len(self.fieldnames) == 2:
+            data_list = {}
+            if data is None:
+                return {}
+            for row in data:
+                data_list[row[self.fieldnames[0]]] = row[self.fieldnames[1]]
+            return data_list
+        elif len(self.fieldnames) == 1:
+            if data is None:
+                return []
+            my_list = []
+            for row in data:
+                my_list.append(row[self.fieldnames[0]])
+            return my_list
 
     def get_bottom(self) -> str:
         return ", ".join(self.bottom())
+
+    def get_items(self) -> str:
+        """Returns self.data as a string for human consumption."""
+        tmp = self.get_all_data()
+        return ', '.join("{!s}: {!s}".format(k, v) for (k, v) in tmp.items())
+
 
     def get_top(
             self,
