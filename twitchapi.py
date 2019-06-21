@@ -41,10 +41,11 @@ def is_broadcasting(
     url = f"https://api.twitch.tv/helix/streams/?user_login={channel}"
     headers = {"Client-ID": client_id}
 
-    result = get(url, headers=headers).json()
-    if len(result["data"]) == 0:
+    result = (get(url, headers=headers).json()).get("data")
+    if result:
+        return True
+    else:
         return False
-    return True
 
 
 def is_vip(channel: str, user: str) -> bool:
