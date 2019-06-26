@@ -1,14 +1,14 @@
-from mongoconn import MongoCon
+from database_connection import DatabaseConnection
 
 
-class Template(MongoCon):
+class Template(DatabaseConnection):
     def __init__(
             self,
-            collection_name: str,
-            fieldnames: tuple
+            table_name: str,
+            column_names: tuple
     ):
-        super().__init__(collection_name)
-        self.fieldnames = fieldnames
+        super().__init__(table_name)
+        self.fieldnames = column_names
 
     def add_item(
             self,
@@ -117,7 +117,7 @@ class Template(MongoCon):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
         data = {self.fieldnames[0]: key}
-        result = self.get_document(data)
+        result = self.get_row(data)
         return result[self.fieldnames[1]]
 
     def item_exists(
@@ -125,7 +125,7 @@ class Template(MongoCon):
             key: str
     ):
         data = {self.fieldnames[0]: key}
-        result = self.get_document(data)
+        result = self.get_row(data)
         if result is not None:
             return True
         return False

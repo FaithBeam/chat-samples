@@ -4,10 +4,10 @@ from template import Template
 class Commands(Template):
     def __init__(
             self,
-            collection_name="commands",
+            table_name="commands",
             col_names=('Command Name', 'Message')
     ):
-        super().__init__(collection_name, col_names)
+        super().__init__(table_name, col_names)
 
     def get_commands(self) -> str:
         """Returns a list of all command names separated by commas,
