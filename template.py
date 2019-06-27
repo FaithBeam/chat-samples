@@ -1,14 +1,19 @@
 from database_connection import DatabaseConnection
+from config import session
 
 
 class Template(DatabaseConnection):
     def __init__(
             self,
-            table_name: str,
-            column_names: tuple
+            table_name,
+            schema,
+            column_names: tuple,
+            session=session
     ):
-        super().__init__(table_name)
+        super().__init__(table_name, session)
+        self.table_schema = schema()
         self.fieldnames = column_names
+        self.session = session
 
     def add_item(
             self,
@@ -17,11 +22,11 @@ class Template(DatabaseConnection):
     ):
         if self.item_exists(key):
             return f"{key} already exists."
-        data = {self.fieldnames[0]: key, self.fieldnames[1]: val}
-        result = self.insert_record(data)
-        if result is not None:
-            return f"Added {key}: {val}."
-        return f"Couldn't add {key}."
+        insert = self.table_schema.load(
+            {self.fieldnames[0]: key, self.fieldnames[1]: val}
+        ).data
+        self.insert_record(insert)
+        return f"Added {key}: {val}."
 
     def add_to_value(
             self,
@@ -44,10 +49,8 @@ class Template(DatabaseConnection):
         return f"Couldn't add {val} to {key}."
 
     def delete_item(self, item_name: str) -> str:
-        result = self.delete_record({self.fieldnames[0]: item_name})
-        if result == 1:
-            return f"Deleted {item_name}."
-        return f"Didn't delete {item_name}."
+        self.delete_record(self.fieldnames[0], item_name)
+        return f"Deleted {item_name}."
 
     def get_all_data(self):
         data = self.get_all_records()
@@ -116,16 +119,14 @@ class Template(DatabaseConnection):
     ) -> str:
         if not self.item_exists(key):
             return f"{key} doesn't exist."
-        data = {self.fieldnames[0]: key}
-        result = self.get_record(data)
-        return result[self.fieldnames[1]]
+        result = self.get_record(self.fieldnames[0], key)
+        return getattr(result, self.fieldnames[1])
 
     def item_exists(
             self,
             key: str
     ):
-        data = {self.fieldnames[0]: key}
-        result = self.get_record(data)
+        result = self.get_record(self.fieldnames[0], key)
         if result is not None:
             return True
         return False
@@ -137,9 +138,5 @@ class Template(DatabaseConnection):
     ):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
-        data = {self.fieldnames[0]: key, self.fieldnames[1]: val}
-        search = {self.fieldnames[0]: key}
-        result = self.update_document(search, data)
-        if result == 1:
-            return f"Set {key} to {val}."
-        return f"Couldn't set {key} to {val}."
+        self.update_document(self.fieldnames[0], key, val)
+        return f"Set {key} to {val}."

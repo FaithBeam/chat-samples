@@ -90,4 +90,5 @@ class TestDatabaseConnection(TestCase):
 
     def test_update_record(self):
         self.db_test.update_document("username", "test", "changed")
-        print(self.db_test.get_record("username", "changed"))
+        assert self.db_test.get_record("username", "changed").username == \
+               "changed"
