@@ -18,7 +18,7 @@ class Template(DatabaseConnection):
         if self.item_exists(key):
             return f"{key} already exists."
         data = {self.fieldnames[0]: key, self.fieldnames[1]: val}
-        result = self.insert_document(data)
+        result = self.insert_record(data)
         if result is not None:
             return f"Added {key}: {val}."
         return f"Couldn't add {key}."
@@ -44,13 +44,13 @@ class Template(DatabaseConnection):
         return f"Couldn't add {val} to {key}."
 
     def delete_item(self, item_name: str) -> str:
-        result = self.delete_document({self.fieldnames[0]: item_name})
+        result = self.delete_record({self.fieldnames[0]: item_name})
         if result == 1:
             return f"Deleted {item_name}."
         return f"Didn't delete {item_name}."
 
     def get_all_data(self):
-        data = self.get_all_documents()
+        data = self.get_all_records()
         if len(self.fieldnames) == 2:
             data_list = {}
             if data is None:
@@ -117,7 +117,7 @@ class Template(DatabaseConnection):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
         data = {self.fieldnames[0]: key}
-        result = self.get_row(data)
+        result = self.get_record(data)
         return result[self.fieldnames[1]]
 
     def item_exists(
@@ -125,7 +125,7 @@ class Template(DatabaseConnection):
             key: str
     ):
         data = {self.fieldnames[0]: key}
-        result = self.get_row(data)
+        result = self.get_record(data)
         if result is not None:
             return True
         return False

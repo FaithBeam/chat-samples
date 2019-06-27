@@ -4,8 +4,8 @@ from models import Score, ScoreSchema
 
 
 def main():
-    db_con = DatabaseConnection(Score)
-    tmp = db_con.get_row("username", "test")
+    db_con = DatabaseConnection(Score, session)
+    tmp = db_con.get_record("username", "test")
     print(tmp.username)
 
 

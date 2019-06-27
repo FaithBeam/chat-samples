@@ -17,7 +17,7 @@ class Quotes(Template):
         if quote == "" or self.contains_quote(quote):
             return "Didn't add quote."
         self.data.append(quote)
-        self.insert_document({self.fieldnames[0]: quote})
+        self.insert_record({self.fieldnames[0]: quote})
         return f"Added quote at position #{len(self.data)}."
 
     def contains_quote(

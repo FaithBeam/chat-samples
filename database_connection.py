@@ -1,63 +1,63 @@
-from config import session
+from sqlalchemy import desc
 
 
 class DatabaseConnection:
-    def __init__(self, table_name):
+    def __init__(self, table_name, session):
         self.table_name = table_name
+        self.session = session
 
     def bottom(
             self,
-            field: str
+            column: str,
+            limit=3
     ):
-        return self.db[self.table_name]\
-            .find()\
-            .sort(field, ASCENDING)\
-            .limit(3)
+        return self.session.query(self.table_name) \
+            .order_by(getattr(self.table_name, column))\
+            .limit(limit)
 
-    def count_documents(self):
-        return self.db[self.table_name].count()
+    def count_records(self):
+        return self.session.query(self.table_name).count()
 
-    def delete_document(
-            self,
-            data: dict
-    ):
-        return self.db[self.table_name].delete_one(data).deleted_count
-
-    def get_row(
+    def delete_record(
             self,
             column: str,
             value
     ):
-        return session.query(self.table_name).filter(getattr(self.table_name, column).like(value)).first()
+        self.session.delete(self.get_record(column, value))
+        self.session.commit()
 
-    def get_all_documents(self) -> list:
-        tmp_list = []
-        tmp = self.db[self.table_name].find()
-        for row in tmp:
-            tmp_list.append(row)
-        return tmp_list
-
-    def insert_document(
+    def get_record(
             self,
-            data: dict
+            column: str,
+            value
     ):
-        return self.db[self.table_name].insert_one(data).inserted_id
+        return self.session.query(self.table_name)\
+            .filter(getattr(self.table_name, column).like(value))\
+            .first()
+
+    def get_all_records(self):
+        return self.session.query(self.table_name)
+
+    def insert_record(self, data):
+        self.session.add(data)
+        self.session.commit()
 
     def top(
             self,
-            field: str,
+            column: str,
             limit=3
     ):
-        return self.db[self.table_name]\
-            .find()\
-            .sort(field, DESCENDING)\
+        return self.session.query(self.table_name)\
+            .order_by(desc(getattr(self.table_name, column)))\
             .limit(limit)
 
     def update_document(
             self,
-            search: dict,
-            set_data: dict
+            column: str,
+            value,
+            new_value
     ):
-        return self.db[self.table_name]\
-            .replace_one(search, set_data)\
-            .modified_count
+        self.session.query(self.table_name)\
+            .filter(getattr(self.table_name, column) == value)\
+            .update({column: new_value})
+        self.session.commit()
