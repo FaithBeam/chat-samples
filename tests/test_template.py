@@ -52,6 +52,10 @@ class TestTemplate(TestCase):
         assert self.test_template.get_record("username", "test2").username ==\
                "test2"
 
+    def test_add_to_value(self):
+        self.test_template.add_to_value("test", "200")
+        assert self.test_template.get_value("test") == 700
+
     def test_delete_item(self):
         self.test_template.delete_item("test")
         assert self.test_template.get_record("username", "test") is None
@@ -59,6 +63,31 @@ class TestTemplate(TestCase):
     def test_item_exists(self):
         assert self.test_template.item_exists("test") is True
         assert self.test_template.item_exists("rieuhsgihrjug") is False
+
+    def test_get_items_descending(self):
+        session.add(Test(username="test2", score=100))
+        session.add(Test(username="test3", score=200))
+        session.add(Test(username="test4", score=300))
+        assert self.test_template.get_items_descending("score") == "test: 500, test4: 300, test3: 200"
+
+    def test_get_all_data(self):
+        session.add(Test(username="test2", score=100))
+        session.add(Test(username="test3", score=200))
+        session.add(Test(username="test4", score=300))
+        assert self.test_template.get_all_data() == {'test': 500, 'test2': 100, 'test3': 200, 'test4': 300}
+
+    def test_get_bottom(self):
+        session.add(Test(username="test2", score=100))
+        session.add(Test(username="test3", score=200))
+        session.add(Test(username="test4", score=300))
+        assert self.test_template.get_bottom("score") == "test2: 100, test3: 200, test4: 300"
+
+    def test_get_top(self):
+        session.add(Test(username="test2", score=100))
+        session.add(Test(username="test3", score=200))
+        session.add(Test(username="test4", score=300))
+        assert self.test_template.get_items_descending(
+            "score") == "test: 500, test4: 300, test3: 200"
 
     def test_get_value(self):
         assert self.test_template.get_value("test") == 500

@@ -89,6 +89,7 @@ class TestDatabaseConnection(TestCase):
             assert current.score >= row.score
 
     def test_update_record(self):
-        self.db_test.update_document("username", "test", "changed")
+        set = {"username": "changed"}
+        self.db_test.update_record("username", "test", set)
         assert self.db_test.get_record("username", "changed").username == \
                "changed"

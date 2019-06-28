@@ -37,7 +37,7 @@ class Quotes(Template):
             before = self.data[number]
             srch = {self.fieldnames[0]: before}
             set = {self.fieldnames[0]: quote}
-            self.update_document(srch, set)
+            self.update_record(srch, set)
             self.data[number] = quote
             return f"Edited quote #{number + 1}."
         return f"Didn't edit quote #{number + 1}."

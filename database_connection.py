@@ -51,13 +51,13 @@ class DatabaseConnection:
             .order_by(desc(getattr(self.table_name, column)))\
             .limit(limit)
 
-    def update_document(
+    def update_record(
             self,
             column: str,
             value,
-            new_value
+            set: dict
     ):
         self.session.query(self.table_name)\
             .filter(getattr(self.table_name, column) == value)\
-            .update({column: new_value})
+            .update(set)
         self.session.commit()

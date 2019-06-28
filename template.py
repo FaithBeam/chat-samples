@@ -12,6 +12,7 @@ class Template(DatabaseConnection):
     ):
         super().__init__(table_name, session)
         self.table_schema = schema()
+        self.table_name = table_name
         self.fieldnames = column_names
         self.session = session
 
@@ -36,17 +37,12 @@ class Template(DatabaseConnection):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
         pre_val = self.get_value(key)
-        search = {self.fieldnames[0]: key}
-        data = {
-            self.fieldnames[0]: key,
-            self.fieldnames[1]: int(pre_val) + int(val)
-        }
-        if self.update_document(search, data) == 1:
-            return (
-                f"Added {val} to {key}. {key} now has "
-                f"{str(int(pre_val) + int(val))}."
-            )
-        return f"Couldn't add {val} to {key}."
+        set = {self.fieldnames[1]: int(pre_val) + int(val)}
+        self.update_record(self.fieldnames[0], key, set)
+        return (
+            f"Added {val} to {key}. {key} now has "
+            f"{str(int(pre_val) + int(val))}."
+        )
 
     def delete_item(self, item_name: str) -> str:
         self.delete_record(self.fieldnames[0], item_name)
@@ -59,25 +55,23 @@ class Template(DatabaseConnection):
             if data is None:
                 return {}
             for row in data:
-                data_list[row[self.fieldnames[0]]] = row[self.fieldnames[1]]
+                data_list[getattr(row, self.fieldnames[0])] = getattr(row, self.fieldnames[1])
             return data_list
         elif len(self.fieldnames) == 1:
             if data is None:
                 return []
             my_list = []
             for row in data:
-                my_list.append(row[self.fieldnames[0]])
+                my_list.append(getattr(row, self.fieldnames[0]))
             return my_list
 
-    def get_bottom(
-            self,
-            field: str
-    ) -> str:
-        tmp = self.bottom(field)
+    def get_bottom(self, column: str) -> str:
+        rows = self.bottom(column)
         result = ""
-        for row in tmp:
+        for row in rows:
             result = "".join(
-                 [result, ", ", row["Username"], ": ", str(row["Score"])]
+                [result, ", ", getattr(row, self.fieldnames[0]), ": ",
+                 str(getattr(row, self.fieldnames[1]))]
             )
         return result[2:]
 
@@ -88,55 +82,52 @@ class Template(DatabaseConnection):
 
     def get_items_descending(
             self,
-            field: str,
+            column: str,
             limit=3
     ) -> str:
-        tmp = self.top(field, limit)
+        """The same as get_top. CLean this up."""
+        rows = self.top(column, limit)
         result = ""
-        for row in tmp:
+        for row in rows:
             result = "".join(
-                 [result, ", ", row[self.fieldnames[0]], ": ",
-                  str(row[self.fieldnames[1]])]
+                 [result, ", ", getattr(row, self.fieldnames[0]), ": ",
+                  str(getattr(row, self.fieldnames[1]))]
             )
         return result[2:]
 
     def get_top(
-            self,
-            field: str,
-            limit=3
+        self,
+        column: str,
+        limit=3
     ) -> str:
-        tmp = self.top(field, limit)
+        """The same as get_items_descending. Clean this up."""
+        rows = self.top(column, limit)
         result = ""
-        for row in tmp:
+        for row in rows:
             result = "".join(
-                 [result, ", ", row["Username"], ": ", str(row["Score"])]
+                [result, ", ", getattr(row, self.fieldnames[0]), ": ",
+                 str(getattr(row, self.fieldnames[1]))]
             )
         return result[2:]
 
-    def get_value(
-            self,
-            key: str
-    ) -> str:
+    def get_value(self, key: str) -> str:
         if not self.item_exists(key):
             return f"{key} doesn't exist."
         result = self.get_record(self.fieldnames[0], key)
         return getattr(result, self.fieldnames[1])
 
-    def item_exists(
-            self,
-            key: str
-    ):
+    def item_exists(self, key: str):
         result = self.get_record(self.fieldnames[0], key)
         if result is not None:
             return True
         return False
 
     def set_value(
-            self,
-            key: str,
-            val
+        self,
+        key: str,
+        val
     ):
         if not self.item_exists(key):
             return f"{key} doesn't exist."
-        self.update_document(self.fieldnames[0], key, val)
+        self.update_record(self.fieldnames[0], key, {self.fieldnames[1]: val})
         return f"Set {key} to {val}."
