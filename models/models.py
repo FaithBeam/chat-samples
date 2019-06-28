@@ -13,7 +13,7 @@ class Score(Base):
     score = sa.Column(sa.Integer)
 
     def __repr__(self):
-        return "<Score(username={self.username!r}, score={self.score!r})>".format(self=self)
+        return "<Score(Username={self.username!r}, Score={self.score!r})>".format(self=self)
 
 class ScoreSchema(ModelSchema):
     class Meta:
