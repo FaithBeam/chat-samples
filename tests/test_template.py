@@ -1,11 +1,12 @@
 from unittest import TestCase
+from unittest.mock import patch
 from marshmallow_sqlalchemy import ModelSchema
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
+with patch('databases.create_database.check_for_database') as mock_cfd:
+    from template import Template
 import sqlalchemy as sa
-from template import Template
-
 
 engine = create_engine('sqlite://')
 session = scoped_session(sessionmaker(bind=engine))
