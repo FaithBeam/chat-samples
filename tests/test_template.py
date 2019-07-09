@@ -90,6 +90,10 @@ class TestTemplate(TestCase):
         assert self.test_template.get_items_descending(
             "score") == "test: 500, test4: 300, test3: 200"
 
+    def test_get_items(self):
+        session.add(Test(username="test2", score=100))
+        assert self.test_template.get_items() == 'test: 500, test2: 100'
+
     def test_get_value(self):
         assert self.test_template.get_value("test") == 500
 

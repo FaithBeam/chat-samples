@@ -1,6 +1,7 @@
 import logging
 
 from config import config
+from models.models import Score, ScoreSchema
 from template import Template
 
 
@@ -17,7 +18,7 @@ class CheckUserExists:
         self.do_work()
 
     def do_work(self):
-        my_users = Template("scores", ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
 
         if not my_users.item_exists(self.user):
             my_users.add_item(

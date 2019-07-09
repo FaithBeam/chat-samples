@@ -4,6 +4,7 @@ import queue
 from chatcommands.addsong import AddSong
 from chatcommands.chatcommand import ChatCommand
 from config import config, credentials
+from models.models import Score, ScoreSchema, ShopSchema, Shop
 from template import Template
 
 
@@ -31,8 +32,8 @@ class Buy(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template("scores", ("Username", "Score"))
-        my_shop = Template("shop", ("Item Name", "Price"))
+        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_shop = Template(Shop, ShopSchema, ("Item Name", "Price"))
 
         if not my_users.item_exists(self.user):
             return f"{self.user} doesn't exist."

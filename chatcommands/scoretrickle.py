@@ -1,6 +1,7 @@
 import logging
 
 from config import config
+from models.models import Score, ScoreSchema
 from template import Template
 from twitchapi import get_channel_users, is_broadcasting
 
@@ -16,7 +17,7 @@ class ScoreTrickle:
         self.do_work()
 
     def do_work(self):
-        my_users = Template("scores", ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
         trickle = config["TRICKLE"]["TRICKLE"]
 
         if is_broadcasting(self.channel, self.client_id):

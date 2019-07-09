@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Score, ScoreSchema
 from template import Template
 
 
@@ -17,7 +18,7 @@ class SetScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template("scores", ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
 
         if self.score.isdigit():
             msg = my_users.set_value(self.user, int(self.score))

@@ -1,12 +1,11 @@
-"""Store quotes in a csv."""
-
 from random import choice
 from template import Template
+import models.models
 
 
 class Quotes(Template):
     def __init__(self):
-        super().__init__("quotes", ("Quote", ))
+        super().__init__(models.models.Quotes, models.models.QuotesSchema, ("Quote", ))
         self.data = self.get_all_data()
 
     def add_quote(
@@ -35,9 +34,8 @@ class Quotes(Template):
     ) -> str:
         if self.exists_quote(number):
             before = self.data[number]
-            srch = {self.fieldnames[0]: before}
             set = {self.fieldnames[0]: quote}
-            self.update_record(srch, set)
+            self.update_record(self.fieldnames[0], before, set)
             self.data[number] = quote
             return f"Edited quote #{number + 1}."
         return f"Didn't edit quote #{number + 1}."

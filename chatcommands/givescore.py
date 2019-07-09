@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Score, ScoreSchema
 from template import Template
 from twitchapi import get_channel_users
 
@@ -18,7 +19,7 @@ class GiveScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template("scores", ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
 
         if not self.amount.isdigit():
             msg = f"{self.amount} is not valid."

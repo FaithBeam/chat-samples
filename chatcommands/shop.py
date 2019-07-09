@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Shop, ShopSchema
 from template import Template
 
 
@@ -15,7 +16,7 @@ class Shop(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template("shop", ("Item Name", "Price")).get_items_descending(
+        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).get_items_descending(
             "Price", 999)
         logging.info(msg)
         self.send_message(msg)

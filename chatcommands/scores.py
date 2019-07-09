@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Score, ScoreSchema
 from template import Template
 
 
@@ -16,7 +17,7 @@ class Scores(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template("scores", ("Username", "Score"))\
+        msg = Template(Score, ScoreSchema, ("Username", "Score"))\
             .get_value(self.user)
         logging.info(msg)
         self.send_message(str(msg))

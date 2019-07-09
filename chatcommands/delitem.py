@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Shop, ShopSchema
 from template import Template
 
 
@@ -15,6 +16,6 @@ class DelItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template("shop", ("Item Name", "Price")).delete_item(self.item)
+        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).delete_item(self.item)
         logging.info(msg)
         self.send_message(msg)

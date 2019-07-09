@@ -1,6 +1,7 @@
 import logging
 
 from chatcommands.chatcommand import ChatCommand
+from models.models import Shop, ShopSchema
 from template import Template
 
 
@@ -16,7 +17,7 @@ class AddItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template("shop", ("Item Name", "Price")).add_item(self.item,
+        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).add_item(self.item,
                                                                 self.val)
         logging.info(msg)
         self.send_message(msg)
