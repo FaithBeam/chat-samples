@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declarative_base
 from marshmallow_sqlalchemy import ModelSchema
+from marshmallow import fields
 from config import engine, session
 
 Base = declarative_base()

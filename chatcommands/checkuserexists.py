@@ -18,7 +18,7 @@ class CheckUserExists:
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
 
         if not my_users.item_exists(self.user):
             my_users.add_item(

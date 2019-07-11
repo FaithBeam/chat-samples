@@ -16,7 +16,7 @@ class Shop(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).get_items_descending(
+        msg = Template(Shop, ShopSchema, ("item_name", "price")).get_items_descending(
             "Price", 999)
         logging.info(msg)
         self.send_message(msg)

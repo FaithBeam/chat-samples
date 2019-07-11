@@ -16,6 +16,6 @@ class DelItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).delete_item(self.item)
+        msg = Template(Shop, ShopSchema, ("item_name", "price")).delete_item(self.item)
         logging.info(msg)
         self.send_message(msg)

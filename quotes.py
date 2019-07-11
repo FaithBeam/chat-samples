@@ -5,7 +5,7 @@ import models.models
 
 class Quotes(Template):
     def __init__(self):
-        super().__init__(models.models.Quotes, models.models.QuotesSchema, ("Quote", ))
+        super().__init__(models.models.Quotes, models.models.QuotesSchema, ("quote", ))
         self.data = self.get_all_data()
 
     def add_quote(

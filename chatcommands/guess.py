@@ -43,7 +43,7 @@ class Guess(ChatCommand):
         ):
             return
 
-        my_users = Template("scores", ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
         payout = config["GUESS"]["PAYOUT"]
         max_guess = int(config["GUESS"]["MAX_GUESS"])
 

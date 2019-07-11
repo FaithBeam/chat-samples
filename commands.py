@@ -3,7 +3,7 @@ import models.models
 
 
 class Commands(Template):
-    def __init__(self, col_names=('Command Name', 'Message')):
+    def __init__(self, col_names=('command_name', 'message')):
         super().__init__(models.models.Commands, models.models.CommandsSchema, col_names)
 
     def get_commands(self) -> str:

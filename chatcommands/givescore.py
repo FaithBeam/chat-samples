@@ -19,7 +19,7 @@ class GiveScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
 
         if not self.amount.isdigit():
             msg = f"{self.amount} is not valid."

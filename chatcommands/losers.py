@@ -15,7 +15,7 @@ class Losers(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
         msg = my_users.get_bottom("Score")
         logging.info(msg)
         self.send_message(msg)

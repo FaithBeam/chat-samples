@@ -22,8 +22,8 @@ class Slots(ChatCommand):
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user
-        self.my_users = Template(Score, ScoreSchema, ("Username", "Score"))
-        self.my_emotes = Template(Emotes, EmoteSchema, ("Emote Name", "Payout Value"))
+        self.my_users = Template(Score, ScoreSchema, ("username", "score"))
+        self.my_emotes = Template(Emotes, EmoteSchema, ("emote_name", "payout_value"))
         self.score = int(self.my_users.get_value(self.user))
         self.score_after = self.score
         self.slot_price = int(config["SLOTS"]["SLOT_PRICE"])

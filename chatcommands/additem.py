@@ -17,7 +17,7 @@ class AddItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Shop, ShopSchema, ("Item Name", "Price")).add_item(self.item,
+        msg = Template(Shop, ShopSchema, ("item_name", "price")).add_item(self.item,
                                                                 self.val)
         logging.info(msg)
         self.send_message(msg)

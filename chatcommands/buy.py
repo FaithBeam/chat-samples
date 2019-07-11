@@ -32,8 +32,8 @@ class Buy(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
-        my_shop = Template(Shop, ShopSchema, ("Item Name", "Price"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
+        my_shop = Template(Shop, ShopSchema, ("item_name", "price"))
 
         if not my_users.item_exists(self.user):
             return f"{self.user} doesn't exist."

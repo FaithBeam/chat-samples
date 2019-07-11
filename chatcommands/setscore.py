@@ -18,7 +18,7 @@ class SetScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
 
         if self.score.isdigit():
             msg = my_users.set_value(self.user, int(self.score))

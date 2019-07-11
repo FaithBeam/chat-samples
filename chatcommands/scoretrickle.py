@@ -17,7 +17,7 @@ class ScoreTrickle:
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("Username", "Score"))
+        my_users = Template(Score, ScoreSchema, ("username", "score"))
         trickle = config["TRICKLE"]["TRICKLE"]
 
         if is_broadcasting(self.channel, self.client_id):

@@ -12,34 +12,34 @@ def create_default_database(database_file, engine):
     scores = Table(
         'scores', meta,
         Column('id', Integer, primary_key=True),
-        Column('Username', String, unique=True),
-        Column('Score', Integer),
+        Column('username', String, unique=True),
+        Column('score', Integer),
     )
 
     quotes = Table(
         'quotes', meta,
         Column('id', Integer, primary_key=True),
-        Column('Quote', String, unique=True)
+        Column('quote', String, unique=True)
     )
 
     commands = Table(
         'commands', meta,
         Column('id', Integer, primary_key=True),
-        Column('Command Name', String, unique=True),
-        Column('Message', String)
+        Column('command_name', String, unique=True),
+        Column('message', String)
     )
 
     shop = Table(
         'shop', meta,
         Column('id', Integer, primary_key=True),
-        Column('Item Name', String, unique=True),
-        Column('Price', Integer)
+        Column('item_name', String, unique=True),
+        Column('price', Integer)
     )
 
     emotes = Table(
         'emotes', meta,
         Column('id', Integer, primary_key=True),
-        Column('Emote Name', String, unique=True),
-        Column('Payout Value', Integer)
+        Column('emote_name', String, unique=True),
+        Column('payout_value', Integer)
     )
     meta.create_all(engine)
