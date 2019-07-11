@@ -7,7 +7,7 @@ Base = declarative_base()
 
 
 class Quotes(Base):
-    __tablename__ = "commands"
+    __tablename__ = "quotes"
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     quote = sa.Column(sa.String, unique=True)
 
