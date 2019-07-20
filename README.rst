@@ -26,7 +26,7 @@ Configuring
 ===========
 
 Refer to `config/readme.md` for configuration. Credentials.ini is the only 
-necessary edits unless you installed your mongodb instance on another machine.
+necessary edits.
 
 Running
 =======
