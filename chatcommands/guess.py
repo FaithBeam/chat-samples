@@ -4,6 +4,7 @@ import random
 from chatcommands.chatcommand import ChatCommand
 from config import config
 from template import Template
+from models.models import Score, ScoreSchema
 
 
 logging.getLogger(__name__)
