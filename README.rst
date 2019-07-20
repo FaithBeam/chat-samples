@@ -20,7 +20,7 @@ Installation
 2. cd chat-samples
 3. virtualenv venv
 4. source venv/bin/activate
-5. pip install irc requests
+5. pip install irc requests marshmallow-sqlalchemy
 
 Configuring
 ===========
