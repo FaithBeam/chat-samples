@@ -14,7 +14,7 @@ credentials = configparser.ConfigParser()
 credentials.read(credentials_file)
 
 database_file = ".\\databases\\user data.db"
-engine = create_engine(f"sqlite:///{database_file}", echo = True)
+engine = create_engine(f"sqlite:///{database_file}", echo=True)
 check_for_database(database_file, engine)
 
 session = scoped_session(sessionmaker(bind=engine))
