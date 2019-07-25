@@ -1,7 +1,7 @@
 import logging
 
 from collections import Counter
-from random import choice
+from random import choices
 from chatcommands.chatcommand import ChatCommand
 from config import config
 from models.models import Score, ScoreSchema, Emotes, EmoteSchema
@@ -94,5 +94,4 @@ class Slots(ChatCommand):
         emotes = self.my_emotes.get_all_data()
         num_reels = int(config["SLOTS"]["NUM_REELS"])
         key_list = list(dict.keys(emotes))
-        for i in range(num_reels):
-            self.reels.append(choice(key_list))
+        self.reels = choices(population=key_list, k=num_reels)
