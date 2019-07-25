@@ -5,13 +5,10 @@ import models.models
 
 class Quotes(Template):
     def __init__(self):
-        super().__init__(models.models.Quotes, models.models.QuotesSchema, ("quote", ))
+        super().__init__(models.models.Quotes, models.models.QuotesSchema, ("quote",))
         self.data = self.get_all_data()
 
-    def add_quote(
-            self,
-            quote: str
-    ) -> str:
+    def add_quote(self, quote: str) -> str:
         quote = quote.strip()
         if quote == "" or self.contains_quote(quote):
             return "Didn't add quote."
@@ -20,19 +17,12 @@ class Quotes(Template):
         self.insert_record(insert)
         return f"Added quote at position #{len(self.data)}."
 
-    def contains_quote(
-            self,
-            quote: str
-    ) -> bool:
+    def contains_quote(self, quote: str) -> bool:
         if quote in self.data:
             return True
         return False
 
-    def edit_quote(
-            self,
-            number: int,
-            quote: str
-    ) -> str:
+    def edit_quote(self, number: int, quote: str) -> str:
         if self.exists_quote(number):
             before = self.data[number]
             set = {self.fieldnames[0]: quote}
@@ -41,18 +31,12 @@ class Quotes(Template):
             return f"Edited quote #{number + 1}."
         return f"Didn't edit quote #{number + 1}."
 
-    def exists_quote(
-            self,
-            number: int
-    ):
+    def exists_quote(self, number: int):
         if number < len(self.data):
             return True
         return False
 
-    def delete_quote(
-            self,
-            number: str
-    ):
+    def delete_quote(self, number: str):
         number = int(number) - 1
         if len(self.data) > 0 and len(self.data) > int(number):
             self.delete_item(self.data[number])
@@ -61,10 +45,7 @@ class Quotes(Template):
         else:
             return f"Didn't delete quote #{int(number) + 1}."
 
-    def get_quote(
-            self,
-            number: int
-    ):
+    def get_quote(self, number: int):
         if number == -1:
             return self.get_random_quote()
         if number > -1 and self.exists_quote(number):

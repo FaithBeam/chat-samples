@@ -15,6 +15,7 @@ class Quotes(Base):
     def __repr__(self):
         return "<Quotes(Quote={self.quote!r})>".format(self=self)
 
+
 class QuotesSchema(ModelSchema):
     class Meta:
         model = Quotes
@@ -28,7 +29,10 @@ class Commands(Base):
     message = sa.Column(sa.String)
 
     def __repr__(self):
-        return "<Commands(Command Name={self.command_name!r}, Message={self.message!r})>".format(self=self)
+        return "<Commands(Command Name={self.command_name!r}, Message={self.message!r})>".format(
+            self=self
+        )
+
 
 class CommandsSchema(ModelSchema):
     class Meta:
@@ -43,7 +47,9 @@ class Shop(Base):
     price = sa.Column(sa.Integer)
 
     def __repr__(self):
-        return "<Shop(Item Name={self.item_name!r}, Price={self.price!r})>".format(self=self)
+        return "<Shop(Item Name={self.item_name!r}, Price={self.price!r})>".format(
+            self=self
+        )
 
 
 class ShopSchema(ModelSchema):
@@ -59,7 +65,10 @@ class Emotes(Base):
     payout_value = sa.Column(sa.Integer)
 
     def __repr__(self):
-        return "<Emotes(Emote Name={self.emote_name!r}, Payout Value={self.payout_value!r})>".format(self=self)
+        return "<Emotes(Emote Name={self.emote_name!r}, Payout Value={self.payout_value!r})>".format(
+            self=self
+        )
+
 
 class EmoteSchema(ModelSchema):
     class Meta:
@@ -74,7 +83,10 @@ class Score(Base):
     score = sa.Column(sa.Integer)
 
     def __repr__(self):
-        return "<Score(Username={self.username!r}, Score={self.score!r})>".format(self=self)
+        return "<Score(Username={self.username!r}, Score={self.score!r})>".format(
+            self=self
+        )
+
 
 class ScoreSchema(ModelSchema):
     class Meta:

@@ -18,6 +18,7 @@ class Guess(ChatCommand):
     The default is to allow 1-100 but the max guess can be changed in
     config/config.ini.
     """
+
     def __init__(self, user: str, guess: str, auth_user, c, channel: str):
         super().__init__(c, channel)
         self.user = user
@@ -32,15 +33,10 @@ class Guess(ChatCommand):
         bot_win_cooldown = int(config["GUESS"]["bot_win_cooldown"])
         user_guess_cooldown = int(config["GUESS"]["user_guess_cooldown"])
 
-        if not self.auth_user.user_can_message(
-                "bot_guess",
-                bot_win_cooldown,
-                False
-        ):
+        if not self.auth_user.user_can_message("bot_guess", bot_win_cooldown, False):
             return
         if not self.auth_user.user_can_message(
-                self.user + "_guess",
-                user_guess_cooldown
+            self.user + "_guess", user_guess_cooldown
         ):
             return
 
@@ -73,15 +69,19 @@ class Guess(ChatCommand):
         elif (rand_num - 2) <= int(self.guess) <= (rand_num + 2):
             consolation_prize = config["GUESS"]["CONSOLATION_PRIZE"]
             my_users.add_to_value(self.user, consolation_prize)
-            msg = f"Consolation prize! You chose {self.guess}, number was " \
-                  f"{rand_num}. Added {consolation_prize} {currency_name}."
+            msg = (
+                f"Consolation prize! You chose {self.guess}, number was "
+                f"{rand_num}. Added {consolation_prize} {currency_name}."
+            )
             logging.info(msg)
             self.send_whisper(msg, self.user)
         elif (rand_num - 5) <= int(self.guess) <= (rand_num + 5):
             consolation_prize = "1"
             my_users.add_to_value(self.user, consolation_prize)
-            msg = f"Consolation prize! You chose {self.guess}, number was " \
-                  f"{rand_num}. Added {consolation_prize} {currency_name}."
+            msg = (
+                f"Consolation prize! You chose {self.guess}, number was "
+                f"{rand_num}. Added {consolation_prize} {currency_name}."
+            )
             logging.info(msg)
             self.send_whisper(msg, self.user)
         else:

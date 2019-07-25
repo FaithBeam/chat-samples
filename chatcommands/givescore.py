@@ -11,7 +11,8 @@ class GiveScore(ChatCommand):
     !givescore <amount>
     Gives all users in chat that have an account the amount you specify.
     """
-    def __init__(self, amount,  c, channel):
+
+    def __init__(self, amount, c, channel):
         super().__init__(c, channel)
         self.c = c
         self.channel = channel

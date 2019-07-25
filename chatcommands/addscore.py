@@ -10,6 +10,7 @@ class AddScore(ChatCommand):
     !add{currency_name} <target_user> <amount>
     Add some currency to a user.
     """
+
     def __init__(self, user: str, score: str, c, channel):
         super().__init__(c, channel)
         self.user = user
@@ -17,7 +18,8 @@ class AddScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Score, ScoreSchema, ("username", "score"))\
-            .add_to_value(self.user, self.score)
+        msg = Template(Score, ScoreSchema, ("username", "score")).add_to_value(
+            self.user, self.score
+        )
         logging.info(msg)
         self.send_message(msg)

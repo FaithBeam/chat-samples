@@ -11,6 +11,7 @@ class DiceGame(ChatCommand):
     Flips the !roll command on or off. If the game is turned on,
     turn it off, and if the game is off, turn it on.
     """
+
     def __init__(self, c, channel):
         super().__init__(c, channel)
         self.do_work()
@@ -27,7 +28,7 @@ class DiceGame(ChatCommand):
         else:
             msg = "Enabled dice."
             config.set("DICE", "DICE_ENABLED", "true")
-        with open(config_file, 'w') as configfile:
+        with open(config_file, "w") as configfile:
             config.write(configfile)
 
         logging.info(msg)

@@ -9,6 +9,7 @@ class DelCom(ChatCommand):
     !delcom <command_name>
     Deletes a command from the custom command db.
     """
+
     def __init__(self, command, c, channel):
         super().__init__(c, channel)
         self.command = command

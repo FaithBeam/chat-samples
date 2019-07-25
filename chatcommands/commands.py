@@ -9,6 +9,7 @@ class CustCommands(ChatCommand):
     !commands
     Returns a list of all commands.
     """
+
     def __init__(self, whisper_cmds, public_cmds, privileged_cmds, c, channel):
         super().__init__(c, channel)
         self.whisper_cmds = whisper_cmds.copy()
@@ -23,14 +24,7 @@ class CustCommands(ChatCommand):
         privs = self.do_thing(self.privileged_cmds)
         tmp = my_custom_commands.get_commands()
 
-        msg = ", ".join(
-            [
-                tmp,
-                whispers,
-                publics,
-                privs
-            ]
-        )
+        msg = ", ".join([tmp, whispers, publics, privs])
         logging.info(msg)
         self.send_message(msg)
 

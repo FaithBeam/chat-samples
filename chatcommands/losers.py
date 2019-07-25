@@ -10,6 +10,7 @@ class Losers(ChatCommand):
     !losers
     Returns the three users with the lowest currency.
     """
+
     def __init__(self, c, channel):
         super().__init__(c, channel)
         self.do_work()

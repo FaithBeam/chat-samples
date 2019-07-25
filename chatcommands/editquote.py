@@ -9,6 +9,7 @@ class EditQuote(ChatCommand):
     !editquote <quote_index> <new quote here>
     Edits an existing quote by index.
     """
+
     def __init__(self, quote_num, val: str, c, channel):
         super().__init__(c, channel)
         self.quote_num = quote_num

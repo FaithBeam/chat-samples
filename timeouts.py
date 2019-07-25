@@ -11,12 +11,7 @@ class Timeouts:
     def __init__(self):
         self.users = {}
 
-    def user_can_message(
-            self,
-            username: str,
-            sec_delay,
-            set_time=True
-    ) -> bool:
+    def user_can_message(self, username: str, sec_delay, set_time=True) -> bool:
         """
         Return if a user can send a command to the bot. Check if the current
         time is greater than the stored time plus message delay to determine
@@ -39,20 +34,11 @@ class Timeouts:
                 self._set_time(username, now, sec_delay)
             return True
 
-    def _set_time(
-            self,
-            username: str,
-            time: datetime.datetime,
-            sec_delay: int
-    ):
+    def _set_time(self, username: str, time: datetime.datetime, sec_delay: int):
         """Sets when a user's commands are acknowledged again. After time +
         delay."""
-        self.users[username] = \
-            time + datetime.timedelta(seconds=sec_delay)
+        self.users[username] = time + datetime.timedelta(seconds=sec_delay)
 
-    def _user_exists(
-            self,
-            username: str
-    ) -> bool:
+    def _user_exists(self, username: str) -> bool:
         """Return true of false if a user has already sent a command."""
         return username in self.users

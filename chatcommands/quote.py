@@ -12,6 +12,7 @@ class Quote(ChatCommand):
     If no integer is supplied, return a random quote. If an integer is
     supplied, return the quote corresponding to the index.
     """
+
     def __init__(self, quote_num, c, channel):
         super().__init__(c, channel)
         self.quote_num = quote_num
