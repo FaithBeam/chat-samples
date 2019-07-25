@@ -15,15 +15,8 @@ class Buy(ChatCommand):
 
     The user must have enough currency to purchase an item.
     """
-    def __init__(
-            self,
-            user: str,
-            item: str,
-            music_queue: queue,
-            e,
-            c,
-            channel
-    ):
+
+    def __init__(self, user: str, item: str, music_queue: queue, e, c, channel):
         super().__init__(c, channel)
         self.user = user
         self.item = item
@@ -56,8 +49,10 @@ class Buy(ChatCommand):
             if yt_link:
                 yt_link = yt_link[1]
                 if AddSong(self.user, yt_link, self.music_queue).do_work():
-                    msg = f"Added {yt_link} to the queue in position " \
-                          f"{len(self.music_queue.queue)}."
+                    msg = (
+                        f"Added {yt_link} to the queue in position "
+                        f"{len(self.music_queue.queue)}."
+                    )
                     logging.info(msg)
                     self.send_message(msg)
                 else:
@@ -71,10 +66,7 @@ class Buy(ChatCommand):
                 self.send_message(msg)
                 return
 
-        my_users.add_to_value(
-            self.user,
-            str(-1 * my_shop.get_value(self.item))
-        )
+        my_users.add_to_value(self.user, str(-1 * my_shop.get_value(self.item)))
 
         msg = (
             f"@{credentials['CREDENTIALS']['CHANNEL']} {self.user} purchased "
@@ -88,7 +80,7 @@ class Buy(ChatCommand):
 
 
 def parse_custom_cmd(msg):
-    cmd = msg.arguments[0].split(' ', 2)[1:]
+    cmd = msg.arguments[0].split(" ", 2)[1:]
     if len(cmd) != 2 or not cmd[0].isalnum():
         return False
     return cmd

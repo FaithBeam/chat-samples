@@ -25,10 +25,7 @@ def get_user_group(channel: str, user: str) -> str:
     return ""
 
 
-def is_broadcasting(
-        channel: str,
-        client_id: str
-) -> bool:
+def is_broadcasting(channel: str, client_id: str) -> bool:
     """Returns a bool if the channel is broadcasting.
 
     :param channel: Name of the channel.

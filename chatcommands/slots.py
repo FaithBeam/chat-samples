@@ -19,6 +19,7 @@ class Slots(ChatCommand):
     The slots game. Costs 5 currency to play, but can be played even if you
     don't have enough. In this case you go into negative currency.
     """
+
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user
@@ -54,7 +55,7 @@ class Slots(ChatCommand):
         if multiplier == 1:
             self.is_vip = is_vip(self.channel[1:], self.user)
             if self.is_vip:
-                self.payout *= (2 * multiplier)
+                self.payout *= 2 * multiplier
 
         self.payout *= multiplier
         self.score_after += self.payout
@@ -63,14 +64,18 @@ class Slots(ChatCommand):
         reels = " ".join(self.reels)
 
         if self.jackpot:
-            msg = f"JACKPOT! {self.user} got {reels}, {self.user} won " \
-                  f"{str(self.payout)} {self.currency_name}!"
+            msg = (
+                f"JACKPOT! {self.user} got {reels}, {self.user} won "
+                f"{str(self.payout)} {self.currency_name}!"
+            )
             logging.info(msg)
             self.send_message(msg)
             self.send_whisper(msg, self.user)
         else:
-            msg = f"{reels} You won: {str(self.payout)}. You have: " \
-                  f"{str(self.score_after)} {self.currency_name}!"
+            msg = (
+                f"{reels} You won: {str(self.payout)}. You have: "
+                f"{str(self.score_after)} {self.currency_name}!"
+            )
             logging.info(msg)
             self.send_whisper(msg, self.user)
 

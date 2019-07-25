@@ -13,6 +13,7 @@ class ScoreTrickle:
     Currency trickle. Everyone in chat with an account in the scores db gets
     1 currency every 600 seconds.
     """
+
     def __init__(self, channel: str, client_id: str):
         self.channel = channel
         self.client_id = client_id

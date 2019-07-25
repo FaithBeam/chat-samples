@@ -20,13 +20,13 @@ Installation
 2. cd chat-samples
 3. virtualenv venv
 4. source venv/bin/activate
-5. pip install irc requests
+5. pip install irc requests marshmallow-sqlalchemy
 
 Configuring
 ===========
 
 Refer to `config/readme.md` for configuration. Credentials.ini is the only 
-necessary edits unless you installed your mongodb instance on another machine.
+necessary edits.
 
 Running
 =======

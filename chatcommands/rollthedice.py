@@ -11,6 +11,7 @@ class RollTheDice(ChatCommand):
 
     Rolls a die.
     """
+
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user

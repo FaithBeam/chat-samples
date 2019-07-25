@@ -14,11 +14,6 @@
   * `cooldown` How frequently the bot can handle commands. The commands do 
   not get queued, they will be ignored. Default `1`
   
-  **Mongodb**
-  
-  * `ip` ip address of the mongodb instance. Default `localhost`
-  * `port` port that the mongodb instance uses. Default `27017`
-  
   **Slots**
   
   * `slot_price` The cost in currency it is to use the command `!slots`. 

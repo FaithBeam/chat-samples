@@ -45,61 +45,71 @@ from timeouts import Timeouts
 logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-    datefmt='%m-%d %H:%M',
+    format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
+    datefmt="%m-%d %H:%M",
     filename=f"logs/{time.strftime('%Y%m%d-%H%M%S')}.log",
-    filemode='w'
+    filemode="w",
 )
 
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)-24s %(levelname)-8s %(message)s')
+formatter = logging.Formatter("%(asctime)-24s %(levelname)-8s %(message)s")
 console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
+logging.getLogger("").addHandler(console)
 
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
-    def __init__(
-            self,
-            username: str,
-            client_id: str,
-            oauth: str,
-            channel: str
-    ):
+    def __init__(self, username: str, client_id: str, oauth: str, channel: str):
         self.channel = f"#{channel}"
         self.client_id = client_id
         self.oauth = oauth
         self.username = username
         self.auth_user = Timeouts()
         self.bot_cooldown = int(config["BOT"]["COOLDOWN"])
-        self.currency_name = (config['DEFAULT']['CURRENCY_NAME']).lower()
+        self.currency_name = (config["DEFAULT"]["CURRENCY_NAME"]).lower()
 
         server = config["TWITCH"]["SERVER"]
         port = int(config["TWITCH"]["PORT"])
         irc.bot.SingleServerIRCBot.__init__(
-            self,
-            [(server, port, f"oauth:{oauth}")],
-            username,
-            username
+            self, [(server, port, f"oauth:{oauth}")], username, username
         )
         self.c = self.connection
 
         self.rt2 = RepeatedTimer(
-            int(config["TRICKLE"]["FREQUENCY"]), ScoreTrickle, channel,
-            client_id
+            int(config["TRICKLE"]["FREQUENCY"]), ScoreTrickle, channel, client_id
         )
 
         self.whisper_cmds = ["slots", "guess"]
         self.privileged_whisper_cmds = ["say"]
         self.privileged_cmds = [
-            "addcom", f"add{self.currency_name}", "delcom", "delitem",
-            "delquote", "editcom", "editquote", f"give{self.currency_name}",
-            "multiplier", "additem", f"set{self.currency_name}",
-            "trickle", "maxroll", "dicegame", "nextsong", "songqueue"
+            "addcom",
+            f"add{self.currency_name}",
+            "delcom",
+            "delitem",
+            "delquote",
+            "editcom",
+            "editquote",
+            f"give{self.currency_name}",
+            "multiplier",
+            "additem",
+            f"set{self.currency_name}",
+            "trickle",
+            "maxroll",
+            "dicegame",
+            "nextsong",
+            "songqueue",
         ]
         self.public_cmds = [
-            "addquote", "commands", f"{self.currency_name}", "shop",
-            "winners", "losers", "numquotes", "quote", "buy", "roll"
+            "addquote",
+            "commands",
+            f"{self.currency_name}",
+            "shop",
+            "winners",
+            "losers",
+            "numquotes",
+            "quote",
+            "buy",
+            "roll",
         ]
         self.music_queue = queue.Queue()
 
@@ -116,16 +126,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         CheckUserExists(user)
 
         user_cmd_cooldown = int(config["COMMANDS"]["user_cmd_cooldown"])
-        if not self.auth_user.user_can_message(
-                f"{user}_cmd", user_cmd_cooldown
-        ):
+        if not self.auth_user.user_can_message(f"{user}_cmd", user_cmd_cooldown):
             return
 
         if cmd in self.whisper_cmds and self._is_whisper(e.target):
             self._do_whisper_cmd(e, cmd, user)
-        elif cmd in self.privileged_whisper_cmds \
-                and self._is_whisper(e.target) \
-                and rank < 5:
+        elif (
+            cmd in self.privileged_whisper_cmds
+            and self._is_whisper(e.target)
+            and rank < 5
+        ):
             self._do_privileged_whisper_cmd(e, cmd, user)
         elif cmd in self.privileged_cmds and rank < 5:
             self._do_privileged_cmd(e, cmd)
@@ -136,9 +146,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
     def on_welcome(self, c, e):
         """Executed on bot startup to request capabilities from Twitch."""
-        c.cap('REQ', ':twitch.tv/membership')
-        c.cap('REQ', ':twitch.tv/tags')
-        c.cap('REQ', ':twitch.tv/commands')
+        c.cap("REQ", ":twitch.tv/membership")
+        c.cap("REQ", ":twitch.tv/tags")
+        c.cap("REQ", ":twitch.tv/commands")
         logging.info(f"Joining {self.channel}")
         c.join(self.channel)
         logging.info(f"Joined {self.channel}")
@@ -202,7 +212,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 Say(msg, self.c, self.channel)
 
     def _do_public_cmd(self, e, cmd, user):
-        if not self.auth_user.user_can_message('bot', self.bot_cooldown):
+        if not self.auth_user.user_can_message("bot", self.bot_cooldown):
             return
         elif cmd == "addquote":
             quote = get_quote(e)
@@ -214,7 +224,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 self.public_cmds,
                 self.privileged_cmds,
                 self.c,
-                self.channel
+                self.channel,
             )
         elif cmd == self.currency_name:
             if self._message_word_count(e.arguments[0]) == 2:
@@ -252,7 +262,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         tmp = self._get_second_word(msg)
         if tmp == -1 or not tmp.isdigit():
             return -1
-        return int(''.join(tmp)) - 1
+        return int("".join(tmp)) - 1
 
     def _get_rank(self, msg, user: str) -> int:
         """Applies a rank to the user of the message for authentication."""
@@ -268,25 +278,24 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     def _get_command(msg) -> str:
         """Returns the command of the message. Commands are identified by
         starting with !"""
-        return msg.arguments[0].split(' ')[0][1:]
+        return msg.arguments[0].split(" ")[0][1:]
 
     @staticmethod
     def _get_second_word(msg):
         try:
-            return msg.arguments[0].strip().split(' ', 2)[1]
+            return msg.arguments[0].strip().split(" ", 2)[1]
         except IndexError:
             return -1
 
     @staticmethod
     def _get_username(msg) -> str:
         """Returns the username from a message."""
-        return (msg.source.split('!')[0]).lower()
+        return (msg.source.split("!")[0]).lower()
 
     @staticmethod
     def _is_broadcaster(msg) -> bool:
         """Return true or false if the user is the broadcaster."""
-        if msg.tags[0]['value'] is not None and \
-                'broadcaster/1' in msg.tags[0]['value']:
+        if msg.tags[0]["value"] is not None and "broadcaster/1" in msg.tags[0]["value"]:
             return True
         return False
 
@@ -294,17 +303,18 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     def _is_command(msg) -> bool:
         """Return true or false if a message starts with a command.
         A command starts with !"""
-        if msg.arguments[0][:1] == '!' and \
-                len(msg.arguments[0][1:]) > 0 and \
-                msg.arguments[0][1].isalnum():
+        if (
+            msg.arguments[0][:1] == "!"
+            and len(msg.arguments[0][1:]) > 0
+            and msg.arguments[0][1].isalnum()
+        ):
             return True
         return False
 
     @staticmethod
     def _is_moderator(msg) -> bool:
         """Return true or false if a user is a moderator."""
-        if msg.tags[0]['value'] is not None and \
-                'moderator/1' in msg.tags[0]['value']:
+        if msg.tags[0]["value"] is not None and "moderator/1" in msg.tags[0]["value"]:
             return True
         return False
 
@@ -324,35 +334,30 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
     @staticmethod
     def _parse_custom_cmd(msg):
-        cmd = msg.arguments[0].split(' ', 2)[1:]
+        cmd = msg.arguments[0].split(" ", 2)[1:]
         if len(cmd) != 2 or not cmd[0].isalnum():
             return False
         return cmd
 
 
 def get_quote(msg):
-    tmp = msg.arguments[0].split(' ', 1)[1:]
+    tmp = msg.arguments[0].split(" ", 1)[1:]
     if len(tmp) != 1 or len(tmp[0].strip()) < 1:
         return False
     return tmp[0].strip()
 
 
-def main(
-        username: str,
-        client_id: str,
-        oauth: str,
-        channel: str
-):
+def main(username: str, client_id: str, oauth: str, channel: str):
     my_bot = TwitchBot(username, client_id, oauth, channel)
     my_bot.start()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from config import credentials
 
     main(
         credentials["CREDENTIALS"]["BOT_NAME"],
         credentials["CREDENTIALS"]["CLIENT_ID"],
         credentials["CREDENTIALS"]["OAUTH"],
-        credentials["CREDENTIALS"]["CHANNEL"]
+        credentials["CREDENTIALS"]["CHANNEL"],
     )

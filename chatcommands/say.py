@@ -10,6 +10,7 @@ class Say(ChatCommand):
     Whisper the bot with the say command to make the bot say the supplied
     message.
     """
+
     def __init__(self, msg, c, channel):
         super().__init__(c, channel)
         self.msg = msg

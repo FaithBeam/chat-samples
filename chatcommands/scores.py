@@ -11,13 +11,13 @@ class Scores(ChatCommand):
 
     Returns the currency amount of the user.
     """
+
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user
         self.do_work()
 
     def do_work(self):
-        msg = Template(Score, ScoreSchema, ("username", "score"))\
-            .get_value(self.user)
+        msg = Template(Score, ScoreSchema, ("username", "score")).get_value(self.user)
         logging.info(msg)
         self.send_message(str(msg))
