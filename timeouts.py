@@ -22,23 +22,14 @@ class Timeouts:
         :return: True or false
         """
         now = datetime.datetime.now()
-        if self._user_exists(username):
+        if username in self.users:
             if now > self.users[username]:
                 if set_time:
-                    self._set_time(username, now, sec_delay)
+                    self.users[username] = now + datetime.timedelta(seconds=sec_delay)
                 return True
             else:
                 return False
         else:
             if set_time:
-                self._set_time(username, now, sec_delay)
+                self.users[username] = now + datetime.timedelta(seconds=sec_delay)
             return True
-
-    def _set_time(self, username: str, time: datetime.datetime, sec_delay: int):
-        """Sets when a user's commands are acknowledged again. After time +
-        delay."""
-        self.users[username] = time + datetime.timedelta(seconds=sec_delay)
-
-    def _user_exists(self, username: str) -> bool:
-        """Return true of false if a user has already sent a command."""
-        return username in self.users
