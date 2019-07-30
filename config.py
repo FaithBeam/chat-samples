@@ -13,8 +13,10 @@ credentials_file = "./config/credentials.ini"
 credentials = configparser.ConfigParser()
 credentials.read(credentials_file)
 
-database_file = "./databases/user data.db"
-engine = create_engine(f"sqlite:///{database_file}", echo=False)
-check_for_database(database_file, engine)
+db_dialect = config["DATABASE"]["DIALECT"]
+db_destination = config["DATABASE"]["DESTINATION"]
+engine = create_engine(f"{db_dialect}{db_destination}", echo=False)
+if "sqlite" in db_dialect:
+    check_for_database(db_destination, engine)
 
 session = scoped_session(sessionmaker(bind=engine))
