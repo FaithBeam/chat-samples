@@ -12,15 +12,17 @@ class Quotes(Template):
         quote = quote.strip()
         if quote == "" or self.contains_quote(quote):
             return "Didn't add quote."
-        self.data.append(quote)
-        insert = self.table_schema.load({self.fieldnames[0]: quote}).data
-        self.insert_record(insert)
-        return f"Added quote at position #{len(self.data)}."
+        else:
+            self.data.append(quote)
+            insert = self.table_schema.load({self.fieldnames[0]: quote}).data
+            self.insert_record(insert)
+            return f"Added quote at position #{len(self.data)}."
 
     def contains_quote(self, quote: str) -> bool:
         if quote in self.data:
             return True
-        return False
+        else:
+            return False
 
     def edit_quote(self, number: int, quote: str) -> str:
         if self.exists_quote(number):
@@ -29,12 +31,14 @@ class Quotes(Template):
             self.update_record(self.fieldnames[0], before, set)
             self.data[number] = quote
             return f"Edited quote #{number + 1}."
-        return f"Didn't edit quote #{number + 1}."
+        else:
+            return f"Didn't edit quote #{number + 1}."
 
     def exists_quote(self, number: int):
         if number < len(self.data):
             return True
-        return False
+        else:
+            return False
 
     def delete_quote(self, number: str):
         number = int(number) - 1
@@ -48,9 +52,10 @@ class Quotes(Template):
     def get_quote(self, number: int):
         if number == -1:
             return self.get_random_quote()
-        if number > -1 and self.exists_quote(number):
+        elif number > -1 and self.exists_quote(number):
             return f"#{number + 1}/{len(self.data)}: {self.data[number]}"
-        return "No."
+        else:
+            return "No."
 
     def get_number_quotes(self) -> str:
         return str(len(self.data))
@@ -60,4 +65,5 @@ class Quotes(Template):
             quote = choice(self.data)
             pos = self.data.index(quote) + 1
             return f"#{pos}/{len(self.data)}: {quote}"
-        return "No quotes."
+        else:
+            return "No quotes."
