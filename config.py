@@ -13,8 +13,8 @@ credentials_file = "./config/credentials.ini"
 credentials = configparser.ConfigParser()
 credentials.read(credentials_file)
 
-db_dialect = config["DATABASE"]["DIALECT"]
-db_destination = config["DATABASE"]["DESTINATION"]
+db_dialect = config["DATABASE"]["DIALECT"].strip('"')
+db_destination = config["DATABASE"]["DESTINATION"].strip('"')
 engine = create_engine(f"{db_dialect}{db_destination}", echo=False)
 if "sqlite" in db_dialect:
     check_for_database(db_destination, engine)
