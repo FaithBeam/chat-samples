@@ -348,9 +348,11 @@ def get_quote(msg):
 
 
 def main(username: str, client_id: str, oauth: str, channel: str):
-    my_bot = TwitchBot(username, client_id, oauth, channel)
-    my_bot.start()
-
+    try:
+        my_bot = TwitchBot(username, client_id, oauth, channel)
+        my_bot.start()
+    except:
+        logging.exception("")
 
 if __name__ == "__main__":
     from config import credentials
