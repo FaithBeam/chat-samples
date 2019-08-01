@@ -348,18 +348,19 @@ def get_quote(msg):
 
 
 def main(username: str, client_id: str, oauth: str, channel: str):
-    try:
-        my_bot = TwitchBot(username, client_id, oauth, channel)
-        my_bot.start()
-    except:
-        logging.exception("")
+    my_bot = TwitchBot(username, client_id, oauth, channel)
+    my_bot.start()
+
 
 if __name__ == "__main__":
-    from config import credentials
+    try:
+        from config import credentials
 
-    main(
-        credentials["CREDENTIALS"]["BOT_NAME"],
-        credentials["CREDENTIALS"]["CLIENT_ID"],
-        credentials["CREDENTIALS"]["OAUTH"],
-        credentials["CREDENTIALS"]["CHANNEL"],
-    )
+        main(
+            credentials["CREDENTIALS"]["BOT_NAME"],
+            credentials["CREDENTIALS"]["CLIENT_ID"],
+            credentials["CREDENTIALS"]["OAUTH"],
+            credentials["CREDENTIALS"]["CHANNEL"],
+        )
+    except:
+        logging.exception("")
