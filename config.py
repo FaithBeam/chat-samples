@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from databases.create_database import check_for_database
 
-home = str(Path.home())
 config_file = "./config/config.ini"
 config = configparser.ConfigParser()
 config.read(config_file)

@@ -270,8 +270,6 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             return 1
         if self._is_moderator(msg):
             return 2
-        if user.lower() == "purplebattery":
-            return 0
         return 5
 
     @staticmethod
