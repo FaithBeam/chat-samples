@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 with patch('databases.create_database.check_for_database') as mock_cfd:
-    from template import Template
+    from db_connection_utilities import DbConnectionUtilities
 import sqlalchemy as sa
 
 engine = create_engine('sqlite://')
@@ -29,10 +29,10 @@ class TestSchema(ModelSchema):
         sqla_session = session
 
 
-class TestTemplate(TestCase):
+class TestDbConnectionUtilities(TestCase):
     def setUp(self) -> None:
-        self.test_template = Template(Test, TestSchema, ("username", "score"),
-                                      session)
+        self.test_template = DbConnectionUtilities(Test, TestSchema, ("username", "score"),
+                                                   session)
         meta = MetaData()
         test = Table(
             'test', meta,

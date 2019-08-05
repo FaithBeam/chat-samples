@@ -2,7 +2,7 @@ import logging
 
 from config import config
 from models.models import Score, ScoreSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 
 
 class CheckUserExists:
@@ -16,7 +16,7 @@ class CheckUserExists:
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("username", "score"))
+        my_users = DbConnectionUtilities(Score, ScoreSchema, ("username", "score"))
 
         if not my_users.item_exists(self.user):
             my_users.add_item(self.user, int(config["DEFAULT"]["STARTING_CURRENCY"]))

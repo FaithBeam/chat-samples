@@ -5,7 +5,7 @@ from random import choices
 from chatcommands.chatcommand import ChatCommand
 from config import config
 from models.models import Score, ScoreSchema, Emotes, EmoteSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 from twitchapi import is_vip
 
 
@@ -23,8 +23,8 @@ class Slots(ChatCommand):
     def __init__(self, user: str, c, channel):
         super().__init__(c, channel)
         self.user = user
-        self.my_users = Template(Score, ScoreSchema, ("username", "score"))
-        self.my_emotes = Template(Emotes, EmoteSchema, ("emote_name", "payout_value"))
+        self.my_users = DbConnectionUtilities(Score, ScoreSchema, ("username", "score"))
+        self.my_emotes = DbConnectionUtilities(Emotes, EmoteSchema, ("emote_name", "payout_value"))
         self.score = int(self.my_users.get_value(self.user))
         self.score_after = self.score
         self.slot_price = int(config["SLOTS"]["SLOT_PRICE"])

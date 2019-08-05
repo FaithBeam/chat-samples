@@ -3,7 +3,7 @@ import random
 
 from chatcommands.chatcommand import ChatCommand
 from config import config
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 from models.models import Score, ScoreSchema
 
 
@@ -40,7 +40,7 @@ class Guess(ChatCommand):
         ):
             return
 
-        my_users = Template(Score, ScoreSchema, ("username", "score"))
+        my_users = DbConnectionUtilities(Score, ScoreSchema, ("username", "score"))
         payout = config["GUESS"]["PAYOUT"]
         max_guess = int(config["GUESS"]["MAX_GUESS"])
 

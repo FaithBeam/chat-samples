@@ -2,7 +2,7 @@ import logging
 
 from chatcommands.chatcommand import ChatCommand
 from models.models import Shop, ShopSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 
 
 class AddItem(ChatCommand):
@@ -18,7 +18,7 @@ class AddItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Shop, ShopSchema, ("item_name", "price")).add_item(
+        msg = DbConnectionUtilities(Shop, ShopSchema, ("item_name", "price")).add_item(
             self.item, self.val
         )
         logging.info(msg)

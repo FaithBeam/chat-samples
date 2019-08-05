@@ -1,9 +1,9 @@
 from random import choice
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 import models.models
 
 
-class Quotes(Template):
+class Quotes(DbConnectionUtilities):
     def __init__(self):
         super().__init__(models.models.Quotes, models.models.QuotesSchema, ("quote",))
         self.data = self.get_all_data()

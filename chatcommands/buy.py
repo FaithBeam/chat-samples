@@ -5,7 +5,7 @@ from chatcommands.addsong import AddSong
 from chatcommands.chatcommand import ChatCommand
 from config import config, credentials
 from models.models import Score, ScoreSchema, ShopSchema, Shop
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 
 
 class Buy(ChatCommand):
@@ -25,8 +25,8 @@ class Buy(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        my_users = Template(Score, ScoreSchema, ("username", "score"))
-        my_shop = Template(Shop, ShopSchema, ("item_name", "price"))
+        my_users = DbConnectionUtilities(Score, ScoreSchema, ("username", "score"))
+        my_shop = DbConnectionUtilities(Shop, ShopSchema, ("item_name", "price"))
 
         if not my_users.item_exists(self.user):
             return f"{self.user} doesn't exist."

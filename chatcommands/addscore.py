@@ -2,7 +2,7 @@ import logging
 
 from chatcommands.chatcommand import ChatCommand
 from models.models import Score, ScoreSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 
 
 class AddScore(ChatCommand):
@@ -18,7 +18,7 @@ class AddScore(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Score, ScoreSchema, ("username", "score")).add_to_value(
+        msg = DbConnectionUtilities(Score, ScoreSchema, ("username", "score")).add_to_value(
             self.user, self.score
         )
         logging.info(msg)

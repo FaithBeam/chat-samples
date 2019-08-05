@@ -4,7 +4,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from config import config, engine
 from models.models import Score, ScoreSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 from twitchapi import get_channel_users, is_broadcasting
 
 
@@ -25,7 +25,7 @@ class ScoreTrickle:
         # only be used in that same thread." Therefore, we must create our
         # own session for the score trickle.
         session = scoped_session(sessionmaker(bind=engine))
-        my_users = Template(Score, ScoreSchema, ("username", "score"), session)
+        my_users = DbConnectionUtilities(Score, ScoreSchema, ("username", "score"), session)
         trickle = config["TRICKLE"]["TRICKLE"]
 
         if is_broadcasting(self.channel, self.client_id):

@@ -2,7 +2,7 @@ from database_connection import DatabaseConnection
 from config import session
 
 
-class Template(DatabaseConnection):
+class DbConnectionUtilities(DatabaseConnection):
     def __init__(self, table_name, schema, column_names: tuple, session=session):
         super().__init__(table_name, session)
         self.table_schema = schema()

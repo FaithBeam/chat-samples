@@ -2,7 +2,7 @@ import logging
 
 from chatcommands.chatcommand import ChatCommand
 from models.models import Shop, ShopSchema
-from template import Template
+from db_connection_utilities import DbConnectionUtilities
 
 
 class DelItem(ChatCommand):
@@ -17,6 +17,6 @@ class DelItem(ChatCommand):
         self.do_work()
 
     def do_work(self):
-        msg = Template(Shop, ShopSchema, ("item_name", "price")).delete_item(self.item)
+        msg = DbConnectionUtilities(Shop, ShopSchema, ("item_name", "price")).delete_item(self.item)
         logging.info(msg)
         self.send_message(msg)
